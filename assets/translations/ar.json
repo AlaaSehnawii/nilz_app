@@ -1,0 +1,51 @@
+{
+     "app_name": "تطبيق Nilz",
+     "login": "تسجيل الدخول",
+     "password": "كلمة المرور",
+     "email": "البريد الإلكتروني",
+     "welcome_back": "مرحباً من جديد في" ,
+     "login_to_continue": "قم بتسجيل الدخول للمتابعة",
+
+     "dashboard": "الملخص",
+     "search": "بحث",
+     "pending_requests": "الطلبات المعلقة",
+     "statistics": "الإحصائيات",
+     "rating": "التقييم",
+     "total_reservations": "إجمالي الحجوزات",
+     "pending_reservations": "الحجوزات المعلقة",
+     "accepted_reservations": "الحجوزات المقبولة",
+     "total_customers": "إجمالي العملاء",
+     "rejected_reservations": "الحجوزات المرفوضة",
+     "client_cancellations": "الإلغاءات من قبل العميل",
+     "supervisor_cancellations": "الإلغائات من قبل المشرف",
+     "clients_with_accepted_bookings": "العملاء الذين لديهم حجوزات مقبولة",
+     "new_accepted_customers": "العملاء الجدد المقبولين",
+     "this_month": "هذا الشهر",
+     "something_went_wrong": "حدث خطأ ما",
+     "no_statistics_found": "لا يوجد إحصائيات",
+     "no_requests_found": "لا يوجد حجوزات",
+     "total_price": "إجمالي السعر",
+     "rooms": "غرف",
+     "check_in": "تاريخ بداية الحجز",
+     "check-out": "تاريخ نهاية الحجز",
+     "booking_date": "تاريخ الحجز",
+
+     "advertisements": "الإعلانات",
+     "management": "الإدارة",
+     "finance": "المالية",
+     "basic_data": "البيانات الأساسية",
+
+     "edit_city": "تعديل مدينة",
+     "pick_image": "حدد صورة",
+     "no_image_selected": "لا يوجد صورة محددة",
+     "cancel": "إلغاء",
+     "save": "حفظ",
+     "delete_city": "حذف مدينة",
+     "are_you_sure_to_delete": "هل أنت متأكد؟",
+     "delete": "حذف",
+     "add_city": "إضافة مدينة",
+     "no_results_found": "لا يوجد نتائج!"
+
+
+
+}
