@@ -1,9 +1,7 @@
-                                                    import 'package:flutter/material.dart';
-
+import 'package:flutter/material.dart';
 import '../resource/color_manager.dart';
 import '../resource/font_manager.dart';
 import '../resource/size_manager.dart';
-
 
 //!App Text Theme
 TextTheme appTextTheme = TextTheme(
@@ -73,9 +71,7 @@ TextTheme appTextTheme = TextTheme(
 ThemeData lightTheme() {
   return ThemeData(
     useMaterial3: true,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColorManager.background,
-    ),
+    appBarTheme: const AppBarTheme(backgroundColor: AppColorManager.background),
     brightness: Brightness.light,
     primaryColorLight: AppColorManager.blue,
     scaffoldBackgroundColor: AppColorManager.background,
@@ -84,40 +80,38 @@ ThemeData lightTheme() {
     primaryColor: AppColorManager.blue,
     textTheme: appTextTheme,
 
-    progressIndicatorTheme:
-    const ProgressIndicatorThemeData(color: AppColorManager.blue),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: AppColorManager.blue,
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: AppColorManager.blue,
-        foregroundColor: AppColorManager.blue),
+      backgroundColor: AppColorManager.blue,
+      foregroundColor: AppColorManager.blue,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColorManager.white,
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r5),
-        borderSide: const BorderSide(
-          color: AppColorManager.blue,
-        ),
+        borderSide: const BorderSide(color: AppColorManager.blue),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r5),
-        borderSide: const BorderSide(
-          color: AppColorManager.blue,
-        ),
+        borderSide: const BorderSide(color: AppColorManager.blue),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadiusManager.r3),
         borderSide: BorderSide(color: AppColorManager.lightGreyOpacity6),
       ),
       contentPadding: EdgeInsets.symmetric(
-          horizontal: AppWidthManager.w16, vertical: AppHeightManager.h1point5),
+        horizontal: AppWidthManager.w16,
+        vertical: AppHeightManager.h1point5,
+      ),
       hintStyle: TextStyle(
         color: AppColorManager.lightGreyOpacity6,
         fontSize: FontSizeManager.fs16,
         fontWeight: FontWeight.normal,
       ),
-      floatingLabelStyle: const TextStyle(
-        color: AppColorManager.blue,
-      ),
+      floatingLabelStyle: const TextStyle(color: AppColorManager.blue),
       iconColor: AppColorManager.blue,
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: AppColorManager.blue),
@@ -136,8 +130,8 @@ ThemeData lightTheme() {
     // ),
     colorScheme: const ColorScheme.light(primary: AppColorManager.blue)
         .copyWith(
-        secondary:
-        AppColorManager.blue), // Define the default button theme
+          secondary: AppColorManager.blue,
+        ), // Define the default button theme
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColorManager.blue,
       textTheme: ButtonTextTheme.primary,
@@ -145,10 +139,7 @@ ThemeData lightTheme() {
     datePickerTheme: const DatePickerThemeData(
       backgroundColor: AppColorManager.white,
       headerBackgroundColor: AppColorManager.white,
-      headerForegroundColor: AppColorManager.white
+      headerForegroundColor: AppColorManager.white,
     ),
-
-
-
   );
 }

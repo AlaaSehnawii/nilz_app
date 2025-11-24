@@ -7,7 +7,7 @@ import '../../resource/size_manager.dart';
 
 class MainAppButton extends StatelessWidget {
   const MainAppButton({
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.color,
@@ -20,7 +20,7 @@ class MainAppButton extends StatelessWidget {
     this.alignment,
     this.onTap,
     this.borderRadius,
-  }) : super(key: key);
+  });
   final double? width;
   final double? height;
   final Color? color;

@@ -1,9 +1,6 @@
-
 import 'dart:io';
 
 import 'package:package_info_plus/package_info_plus.dart';
-
-/// Eng.Nour Othman(meory)* 22/10/2024
 
 abstract class AppInfoHelper {
   static PackageInfo? packageInfo;
@@ -31,5 +28,4 @@ abstract class AppInfoHelper {
   static String getAppVersion() {
     return packageInfo?.version ?? "";
   }
-
 }

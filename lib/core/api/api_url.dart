@@ -10,10 +10,7 @@ class ApiUrl {
   final String firstBaseUrl = "https://${AppConstantManager.baseUrl}/";
   final String secondBaseUrl = "";
   final bool? useSecondBaseUrl;
-  ApiUrl(
-    this._link, {
-    this.useSecondBaseUrl,
-  });
+  ApiUrl(this._link, {this.useSecondBaseUrl});
 
   getLink() {
     if (useSecondBaseUrl == true) {

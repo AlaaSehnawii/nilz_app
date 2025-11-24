@@ -1,7 +1,5 @@
 import 'dart:math';
 
-
-
 abstract class RandomHelper {
   static String generateRandomHexString({required int length}) {
     final random = Random();

@@ -104,7 +104,7 @@ class ApiMethods {
     Map<String, dynamic>? query,
   }) async {
     final filteredQuery = query == null ? null : filterRequest({...query});
-    final filteredBody  = body  == null ? null : filterRequest({...body});
+    final filteredBody = body == null ? null : filterRequest({...body});
 
     final uri = _buildUri(url: url, query: filteredQuery);
     final headers = _buildHeaders();
@@ -116,11 +116,7 @@ class ApiMethods {
       encodedBody = jsonEncode(filteredBody);
     }
 
-    return http.post(
-      uri,
-      headers: headers,
-      body: hasBody ? encodedBody : null,
-    );
+    return http.post(uri, headers: headers, body: hasBody ? encodedBody : null);
   }
 
   Future<http.Response> patch({
@@ -129,7 +125,7 @@ class ApiMethods {
     Map<String, dynamic>? query,
   }) async {
     final filteredQuery = query == null ? null : filterRequest({...query});
-    final filteredBody  = body  == null ? null : filterRequest({...body});
+    final filteredBody = body == null ? null : filterRequest({...body});
 
     final uri = _buildUri(url: url, query: filteredQuery);
     final headers = _buildHeaders();
@@ -141,10 +137,12 @@ class ApiMethods {
       encodedBody = jsonEncode(filteredBody);
     }
 
-    return http.patch(uri, headers: headers, body: hasBody ? encodedBody : null);
+    return http.patch(
+      uri,
+      headers: headers,
+      body: hasBody ? encodedBody : null,
+    );
   }
-
-
 
   Future<http.Response> put({
     required String url,

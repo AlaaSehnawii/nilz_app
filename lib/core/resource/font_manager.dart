@@ -1,4 +1,3 @@
-
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 abstract class FontFamilyManager {

@@ -16,16 +16,15 @@ abstract class AppColorManager {
   static const Color shimmerBaseColor = Color(0xffe0e0e0);
   static const Color purple = Color(0xffAF52DE);
   static const Color background = Color(0xfffcfcfc);
-
   static const Color lightGrey = Color(0xffF0F2F7);
   static const Color backgroundGrey = Color(0xffF2F2F2);
   static const Color textGrey = Color(0xff8E8E93);
   static const Color buttonGrey = Color(0xffE5E5E5);
-
   static const Color green = Color(0xff34c759);
   static const Color lightGreen = Color(0xf79cffb1);
   static const Color orange = Color(0xffff9500);
   static const Color shadow = Color.fromARGB(28, 130, 130, 130);
   static const Color denim = Color(0xFF4C4DDC);
+  // ignore: deprecated_member_use
   static Color lightGreyOpacity6 = const Color(0xffe5e5ea).withOpacity(0.6);
 }

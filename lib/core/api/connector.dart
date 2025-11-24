@@ -8,9 +8,10 @@ import 'api_error/api_failures.dart';
 //If Internet Connection Exception
 //If Cahced Data Called And Somthing Wrong Happened
 class Connector<T> {
-  Future<Either<ApiFailure, T>> connect(
-      {required Future<Right<ApiFailure, T>> Function() remote,
-      Future<Right<ApiFailure, T>> Function()? cache}) async {
+  Future<Either<ApiFailure, T>> connect({
+    required Future<Right<ApiFailure, T>> Function() remote,
+    Future<Right<ApiFailure, T>> Function()? cache,
+  }) async {
     //Check Internet Connection Function
     final CheckConnectionModel checkConnectionModel =
         await NetworkHelper.checkInternetConnection();

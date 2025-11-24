@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 abstract class DateTimeHelper {
   static String formatDateWithMonthName({required String? date}) {
     try {
       if (date == null) return "";
-      return DateFormat('dd-MMM-yyyy')
-          .format(DateTime.parse(date).toLocal());
+      return DateFormat('dd-MMM-yyyy').format(DateTime.parse(date).toLocal());
     } catch (e) {
-      print(e);
+      debugPrint("$e");
       return '';
     }
   }

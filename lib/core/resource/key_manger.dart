@@ -5,6 +5,4 @@ abstract class AppKeyManager {
   static const String token = "token";
   static const String userId = "userId";
   static const String language = "language";
-
-
 }

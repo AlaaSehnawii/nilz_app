@@ -6,8 +6,10 @@ abstract class LanguageHelper {
     return Directionality.of(context) == TextDirection.ltr;
   }
 
-  static bool isEnglishData(
-      {required BuildContext context, required String data}) {
+  static bool isEnglishData({
+    required BuildContext context,
+    required String data,
+  }) {
     if (data.isEmpty) return checkIfLTR(context: context);
 
     data = data.replaceAll(RegExp(r'[^\w\u0600-\u06FF\s]'), '');

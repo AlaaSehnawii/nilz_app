@@ -1,15 +1,13 @@
 //Check Network Connection Function
 import 'dart:io';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../resource/constant_manager.dart';
 
-
 abstract class NetworkHelper {
-//Connection Checker Function
+  //Connection Checker Function
   static Future<CheckConnectionModel> checkInternetConnection() async {
-    List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
+    List<ConnectivityResult> connectivityResult = await (Connectivity()
+        .checkConnectivity());
 
     if (connectivityResult.first == ConnectivityResult.mobile) {
       return checkMobileInternetConnection();
@@ -22,64 +20,65 @@ abstract class NetworkHelper {
     }
 
     return CheckConnectionModel(
-        isConnected: false,
-        message: "pleaseTurnOnWifiOrMobileData");
+      isConnected: false,
+      message: "pleaseTurnOnWifiOrMobileData",
+    );
   }
 
   static Future<CheckConnectionModel> checkMobileInternetConnection() async {
     final List<InternetAddress> result = await InternetAddress.lookup(
-        AppConstantManager.appIpConnectionTest,
-        type: InternetAddressType.any);
+      AppConstantManager.appIpConnectionTest,
+      type: InternetAddressType.any,
+    );
 
     bool isConnected =
         (result.isNotEmpty && result.first.rawAddress.isNotEmpty);
     return CheckConnectionModel(
-        isConnected: isConnected,
-        message: isConnected
-            ? 'Connected'
-            : "");
+      isConnected: isConnected,
+      message: isConnected ? 'Connected' : "",
+    );
   }
 
   static Future<CheckConnectionModel> checkWifiInternetConnection() async {
     final List<InternetAddress> result = await InternetAddress.lookup(
-        AppConstantManager.appIpConnectionTest,
-        type: InternetAddressType.any);
+      AppConstantManager.appIpConnectionTest,
+      type: InternetAddressType.any,
+    );
 
     bool isConnected =
         (result.isNotEmpty && result.first.rawAddress.isNotEmpty);
     return CheckConnectionModel(
-        isConnected: isConnected,
-        message: isConnected
-            ? 'Connected'
-            : "");
+      isConnected: isConnected,
+      message: isConnected ? 'Connected' : "",
+    );
   }
 
   static Future<CheckConnectionModel> checkVpnInternetConnection() async {
     final List<InternetAddress> result = await InternetAddress.lookup(
-        AppConstantManager.appIpConnectionTest,
-        type: InternetAddressType.any);
+      AppConstantManager.appIpConnectionTest,
+      type: InternetAddressType.any,
+    );
 
     bool isConnected =
         (result.isNotEmpty && result.first.rawAddress.isNotEmpty);
     return CheckConnectionModel(
-        isConnected: isConnected,
-        message: isConnected
-            ? 'Connected'
-            : "");
+      isConnected: isConnected,
+      message: isConnected ? 'Connected' : "",
+    );
   }
 
   static Future<CheckConnectionModel> checkOtherInternetConnection() async {
     final List<InternetAddress> result = await InternetAddress.lookup(
-        AppConstantManager.appIpConnectionTest,
-        type: InternetAddressType.any);
+      AppConstantManager.appIpConnectionTest,
+      type: InternetAddressType.any,
+    );
 
     bool isConnected =
         (result.isNotEmpty && result.first.rawAddress.isNotEmpty);
     return CheckConnectionModel(
-        isConnected: isConnected,
-        message: isConnected
-            ? 'Connected'
-            : "");
+      isConnected: isConnected,
+      message: isConnected ? 'Connected' : "",
+    );
   }
 }
 
@@ -87,8 +86,5 @@ class CheckConnectionModel {
   final String message;
   final bool isConnected;
 
-  CheckConnectionModel({
-    required this.message,
-    required this.isConnected,
-  });
+  CheckConnectionModel({required this.message, required this.isConnected});
 }

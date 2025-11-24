@@ -5,6 +5,9 @@
      "email": "البريد الإلكتروني",
      "welcome_back": "مرحباً من جديد في" ,
      "login_to_continue": "قم بتسجيل الدخول للمتابعة",
+     "exit_app": "إغلاق التطبيق",
+     "are_you_sure_you_want_to_exit": "هل أنت متأكد أنك تريد الخروج؟",
+     "are_you_sure_you_want_to_logout": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
 
      "dashboard": "الملخص",
      "search": "بحث",
@@ -30,10 +33,34 @@
      "check-out": "تاريخ نهاية الحجز",
      "booking_date": "تاريخ الحجز",
 
+     "profile": "الصفحة الشخصية",
+     "notifications": "الإشعارات",
+     "language": "اللغة",
+     "settings": "الإعدادات",
+
+     "reservations": "الحجوزات",
+     "add_reservation": "إضافة حجز",
+     "inquiry": "استعلام",
+     "nights": "ليالي",
+     "guests": "الضيوف",
+
      "advertisements": "الإعلانات",
      "management": "الإدارة",
      "finance": "المالية",
      "basic_data": "البيانات الأساسية",
+     "logout": "تسجيل الخروج",
+     "Reservation_type": "نوع الحجز",
+     "city": "المدينة",
+     "bed_type": "نوع التخت",
+     "post_category": "تصنيف المنشور",
+     "room_type": "نوع الغرفة",
+     "service": "الخدمة",
+     "place_type": "نوع المكان",
+     "reservation_type" : "نوع الحجز",
+     "users": "المستخدمون",
+     "roles": "الأدوار",
+     "payments": "المدفوعات",
+     "invoices": "الفواتير",
 
      "edit_city": "تعديل مدينة",
      "pick_image": "حدد صورة",
@@ -44,7 +71,12 @@
      "are_you_sure_to_delete": "هل أنت متأكد؟",
      "delete": "حذف",
      "add_city": "إضافة مدينة",
-     "no_results_found": "لا يوجد نتائج!"
+     "arabic_name": "الاسم بالعربية",
+     "english_name": "الاسم بالإنجليزية",
+     "no_results_found": "لا يوجد نتائج",
+     "add_bed_type": "إضافة نوع تخت",
+     "edit_bed_type": "تعديل نوع تخت",
+     "delete_bed_type": "حذف نوع تخت"
 
 
 

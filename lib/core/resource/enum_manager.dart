@@ -1,10 +1,6 @@
 import 'dart:ui';
-
 import 'package:nilz_app/core/resource/color_manager.dart';
-
 import 'icon_manager.dart';
-
-/// Eng.Nour Othman(meory)* 23/10/2024
 
 abstract class EnumManager {
   Map<String, num> propertyStateCode = {

@@ -33,6 +33,17 @@
   "check-out": "Check-out",
   "booking_date": "Booking Date",
 
+  "profile": "Profile",
+  "notifications": "Notifications",
+  "language": "Language",
+  "settings": "Settings",
+
+  "reservations": "Reservations",
+  "add_reservation": "Add Reservation",
+  "inquiry": "Inquiry",
+  "nights": "nights",
+  "guests": "Guests",
+
   "advertisements": "Advertisements",
   "management": "Management",
   "finance": "Finance",

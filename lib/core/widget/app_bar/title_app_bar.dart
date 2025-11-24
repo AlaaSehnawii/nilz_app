@@ -14,7 +14,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.showArrowBack,
     this.suffixIcon,
-    this.showSuffixIcon
+    this.showSuffixIcon,
   });
 
   final String title;
@@ -27,29 +27,25 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLtr = LanguageHelper.checkIfLTR(context: context);
+
     return AppBar(
       surfaceTintColor: AppColorManager.white,
       automaticallyImplyLeading: false,
       elevation: 0,
       title: Row(
         children: [
-          Visibility(
-            visible: showArrowBack ?? true,
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
+          if (showArrowBack ?? true)
+            InkWell(
+              onTap: () => Navigator.pop(context),
               child: SvgPicture.asset(
-                LanguageHelper.checkIfLTR(context: context)
-                    ? AppIconManager.arrowLeft
-                    : AppIconManager.arrowRight,
+                isLtr ? AppIconManager.arrowLeft : AppIconManager.arrowRight,
                 colorFilter: const ColorFilter.mode(
                   AppColorManager.black,
                   BlendMode.srcIn,
                 ),
               ),
             ),
-          ),
           SizedBox(width: AppWidthManager.w2),
           AppTextWidget(
             text: title,
@@ -61,18 +57,13 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       actions: [
-        Visibility(
-          visible: showSuffixIcon ?? true,
-          child: Padding(
+        if (showSuffixIcon ?? true)
+          Padding(
             padding: EdgeInsets.only(
-              right: LanguageHelper.checkIfLTR(context: context)
-                  ? AppWidthManager.w5point7
-                  : 0,
-              left: !LanguageHelper.checkIfLTR(context: context)
-                  ? AppWidthManager.w5point7
-                  : 0,
+              right: isLtr ? AppWidthManager.w5point7 : 0,
+              left: !isLtr ? AppWidthManager.w5point7 : 0,
             ),
-            child: DropdownIconButton(
+            child: AppBarMenuButton(
               icon: SvgPicture.asset(
                 AppIconManager.nilz,
                 colorFilter: const ColorFilter.mode(
@@ -80,9 +71,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                   BlendMode.srcIn,
                 ),
               ),
+              onItemSelected: (item) {
+                // TODO: handle navigation based on item
+                // e.g. if (item == AppBarMenuItem.profile) { ... }
+              },
             ),
           ),
-        ),
         if (suffixIcon != null)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppWidthManager.w2),
@@ -93,134 +87,79 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class DropdownIconButton extends StatefulWidget {
-  final Widget icon;
+/// Simple enum to describe the menu items
+enum AppBarMenuItem { profile, notifications, language, settings }
 
-  const DropdownIconButton({super.key, required this.icon});
+class AppBarMenuButton extends StatelessWidget {
+  const AppBarMenuButton({super.key, required this.icon, this.onItemSelected});
+
+  final Widget icon;
+  final ValueChanged<AppBarMenuItem>? onItemSelected;
 
   @override
-  State<DropdownIconButton> createState() => _DropdownIconButtonState();
-}
-
-class _DropdownIconButtonState extends State<DropdownIconButton> {
-  OverlayEntry? _overlayEntry;
-  final LayerLink _layerLink = LayerLink();
-  bool _isOpen = false;
-
-  void _toggleDropdown() {
-    if (_isOpen) {
-      _removeDropdown();
-    } else {
-      _showDropdown();
-    }
-  }
-
-  void _showDropdown() {
-    _overlayEntry = _createOverlayEntry();
-    Overlay.of(context, rootOverlay: true).insert(_overlayEntry!);
-    setState(() {
-      _isOpen = true;
-    });
-  }
-
-  void _removeDropdown() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-    setState(() {
-      _isOpen = false;
-    });
-  }
-
-  OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
-    final offset = renderBox.localToGlobal(Offset.zero);
-
-    return OverlayEntry(
-      builder: (context) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: _removeDropdown,
-                behavior: HitTestBehavior.translucent,
-                child: const SizedBox.shrink(),
-              ),
-            ),
-            Positioned(
-              left: offset.dx - 60,
-              top: offset.dy + size.height + 6,
-              child: Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: AppColorManager.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _buildItem("profile".tr(), AppIconManager.profile),
-                      _buildItem("notifications".tr(), AppIconManager.notification),
-                      _buildItem("language".tr(), AppIconManager.language),
-                      _buildItem("settings".tr(), AppIconManager.settings),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildItem(String text, String icon) {
-    return InkWell(
-      onTap: () {
-        debugPrint("Selected: $text");
-        _removeDropdown();
-        
-      },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        child: Row(
-          children: [
-            SvgPicture.asset(icon, color: AppColorManager.textGrey,),
-            const SizedBox(width: 10,),
-            Text(text, style: const TextStyle(fontSize: 14, color: AppColorManager.textGrey)),
-          ],
-        ),
+  Widget build(BuildContext context) {
+    return Container(
+      height: 34,
+      width: 38,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(width: 2, color: AppColorManager.grey),
+      ),
+      child: PopupMenuButton<AppBarMenuItem>(
+        padding: EdgeInsets.zero,
+        onSelected: onItemSelected,
+        icon: Padding(padding: const EdgeInsets.all(5.0), child: icon),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        itemBuilder: (context) => [
+          _buildMenuItem(
+            context,
+            AppBarMenuItem.profile,
+            "profile".tr(),
+            AppIconManager.profile,
+          ),
+          _buildMenuItem(
+            context,
+            AppBarMenuItem.notifications,
+            "notifications".tr(),
+            AppIconManager.notification,
+          ),
+          _buildMenuItem(
+            context,
+            AppBarMenuItem.language,
+            "language".tr(),
+            AppIconManager.language,
+          ),
+          _buildMenuItem(
+            context,
+            AppBarMenuItem.settings,
+            "settings".tr(),
+            AppIconManager.settings,
+          ),
+        ],
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _removeDropdown();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: InkWell(
-        onTap: _toggleDropdown,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          height: 34,
-          width: 38,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(width: 2, color: AppColorManager.grey),
+  PopupMenuItem<AppBarMenuItem> _buildMenuItem(
+    BuildContext context,
+    AppBarMenuItem value,
+    String text,
+    String iconPath,
+  ) {
+    return PopupMenuItem<AppBarMenuItem>(
+      value: value,
+      child: Row(
+        children: [
+          SvgPicture.asset(iconPath, color: AppColorManager.textGrey),
+          const SizedBox(width: 10),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColorManager.textGrey,
+            ),
           ),
-          padding: const EdgeInsets.all(5.0),
-          child: widget.icon,
-        ),
+        ],
       ),
     );
   }

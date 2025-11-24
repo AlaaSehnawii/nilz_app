@@ -1,6 +1,7 @@
 class ApiGetUrl {
   static String getResStatistics = "api/statistics/reservation";
-  static String getPendingRequests = "api/statistics/pendingReservations?skip=0&limit=1&sortKey=createdAt&sortOrder=-1";
+  static String getPendingRequests =
+      "api/statistics/pendingReservations?skip=0&limit=1&sortKey=createdAt&sortOrder=-1";
   static String getReservation = "api/reservation";
   static String getCity = "api/city";
   static String getBedType = "api/bedType";
@@ -9,7 +10,7 @@ class ApiGetUrl {
   static String getUnitType = "api/unitType";
   static String getPostCategory = "api/postCategory";
   static String getReservationType = "api/reservation-type";
-  static String getService =  "api/service";
+  static String getService = "api/service";
   static String getGift = "api/gift?searchKey";
   static String getPayment = "api/payment";
 }
@@ -25,7 +26,7 @@ class ApiPostUrl {
   static String addUnitType = "api/unitType";
   static String addPostCategory = "api/postCategory";
   static String addReservationType = "api/reservation-type";
-  static String addService =  "api/service";
+  static String addService = "api/service";
   static String addGift = "api/gift";
   static String addPayment = "api/payment";
 }
@@ -38,7 +39,7 @@ class ApiDeleteUrl {
   static String deleteUnitType = "api/unitType/";
   static String deletePostCategory = "api/postCategory/";
   static String deleteReservationType = "api/reservation-type/";
-  static String deleteService =  "api/service/";
+  static String deleteService = "api/service/";
   static String deleteGift = "api/gift/";
   static String deletePayment = "api/payment/";
 }
@@ -55,7 +56,7 @@ class ApiPatchUrl {
   static String editUnitType = "api/unitType/";
   static String editPostCategory = "api/postCategory/";
   static String editReservationType = "api/reservation-type/";
-  static String editService =  "api/service/";
+  static String editService = "api/service/";
   static String editGift = "api/gift/";
   static String editPayment = "api/payment/";
 }

@@ -1,5 +1,5 @@
+// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../resource/key_manger.dart';
 
 abstract class AppSharedPreferences {

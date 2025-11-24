@@ -1,5 +1,4 @@
 import 'package:responsive_sizer/responsive_sizer.dart';
-/// Eng.Nour Othman(meory)* 22/10/2024
 
 abstract class AppRadiusManager {
   static double r3 = 3;

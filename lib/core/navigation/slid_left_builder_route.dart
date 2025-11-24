@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
-
-
 class SlidLeftBuilderRoute extends PageRouteBuilder {
   final Widget page;
   SlidLeftBuilderRoute({required this.page})
-      : super(
-            pageBuilder: (
+    : super(
+        pageBuilder:
+            (
               BuildContext context,
               Animation<double> animation,
               Animation<double> secondaryAnimation,
-            ) =>
-                page,
-            transitionsBuilder: (
+            ) => page,
+        transitionsBuilder:
+            (
               BuildContext context,
               Animation<double> animation,
               Animation<double> secondaryAnimation,
@@ -22,12 +21,15 @@ class SlidLeftBuilderRoute extends PageRouteBuilder {
               const Offset end = Offset.zero;
               const Cubic curve = Curves.ease;
 
-              Animatable<Offset> tween =
-                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              Animatable<Offset> tween = Tween(
+                begin: begin,
+                end: end,
+              ).chain(CurveTween(curve: curve));
 
               return SlideTransition(
                 position: animation.drive(tween),
                 child: child,
               );
-            });
+            },
+      );
 }

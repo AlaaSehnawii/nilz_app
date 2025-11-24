@@ -11,10 +11,7 @@ class ErrorResponseEntity {
   final int errorCode;
   final String message;
 
-  ErrorResponseEntity({
-    required this.errorCode,
-    required this.message,
-  });
+  ErrorResponseEntity({required this.errorCode, required this.message});
 
   factory ErrorResponseEntity.fromRawJson(String str) =>
       ErrorResponseEntity.fromJson(json.decode(str));
@@ -27,8 +24,5 @@ class ErrorResponseEntity {
         message: json["error"] ?? '',
       );
 
-  Map<String, dynamic> toJson() => {
-        "code": errorCode,
-        "error": message,
-      };
+  Map<String, dynamic> toJson() => {"code": errorCode, "error": message};
 }
