@@ -20,8 +20,8 @@ Future<bool> showConfirmDialog(
     builder: (_) => AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       insetPadding: const EdgeInsets.symmetric(horizontal: 24),
-      titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-      contentPadding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+      titlePadding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+      contentPadding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
       title: Center(
         child: Text(
           title,
@@ -38,41 +38,44 @@ Future<bool> showConfirmDialog(
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.pop(context, false),
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: outline, width: 1.2),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+          SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: outline, width: 1.2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      foregroundColor: outline,
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    foregroundColor: outline,
+                    child: Text(cancelText),
                   ),
-                  child: Text(cancelText),
                 ),
-              ),
-              const SizedBox(width: 12),
-              // Confirm - filled
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context, true),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                const SizedBox(width: 10),
+                // Confirm - filled
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      foregroundColor: Colors.white,
+                      elevation: 0,
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    foregroundColor: Colors.white,
-                    elevation: 0,
+                    child: Text(confirmText),
                   ),
-                  child: Text(confirmText),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -179,7 +182,7 @@ Future<bool> showAsyncConfirmDialog(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         foregroundColor: Colors.white,

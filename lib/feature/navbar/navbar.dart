@@ -45,6 +45,7 @@ class _NavBarState extends State<NavBar> {
         BlocProvider<LoginCubit>(create: (_) => di.sl<LoginCubit>()),
         //  --------------------------global cubits here
       ],
+      // ignore: deprecated_member_use
       child: WillPopScope(
         onWillPop: () async {
           final result = await showConfirmDialog(
@@ -183,6 +184,7 @@ class _NavItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // ignore: deprecated_member_use
           SvgPicture.asset(icon, color: iconColor, height: 30, width: 30),
           Text(
             label,

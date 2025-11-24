@@ -51,9 +51,9 @@ class _ReservationListState extends State<ReservationList> {
           );
         }
 
-        final ReservationListResponseEntity? entity = state.entity;
+        final ReservationListResponseEntity entity = state.entity;
         final List<ReservationEntity> reservations =
-            entity?.reservations ?? const [];
+            entity.reservations;
 
         if (reservations.isEmpty) {
           return Center(
@@ -79,7 +79,7 @@ class _ReservationListState extends State<ReservationList> {
           });
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 0.0),
           child: ListView.builder(
             itemCount: sorted.length,
             itemBuilder: (context, index) {

@@ -18,9 +18,6 @@ class ResStatisticsRemoteImpl extends ResStatisticsRemote {
   Future<ResStatisticsResponseEntity> resStatistics() async {
     final response =
         await ApiMethods().get(url: ApiGetUrl.getResStatistics);
-    print("sosooooooooooooolllllllllResStatistics");
-    print(response.statusCode);
-    print(response.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
       final decoded = json.decode(response.body);
       final apiResponse = ResStatisticsApiResponseEntity.fromJson(decoded);

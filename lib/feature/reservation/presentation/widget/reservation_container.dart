@@ -57,188 +57,91 @@ class ReservationContainer extends StatelessWidget {
         unit?.roomCount ??
         (reservation.roomConfig.isNotEmpty ? reservation.roomConfig.length : 0);
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColorManager.backgroundGrey.withOpacity(0.08),
-            AppColorManager.denim.withOpacity(0.04),
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColorManager.backgroundGrey.withOpacity(0.08),
+              AppColorManager.denim.withOpacity(0.04),
+            ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 6),
+            ),
           ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(18),
-        child: Material(
-          color: AppColorManager.white,
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _buildStatusChip(statusName, statusColor),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      // onTapDown: (details) async {
-                      //   final position = details.globalPosition;
-                      //   final selected = await showMenu<String>(
-                      //     context: context,
-                      //     position: RelativeRect.fromLTRB(
-                      //       position.dx,
-                      //       position.dy,
-                      //       position.dx,
-                      //       position.dy,
-                      //     ),
-                      //     items: [
-                      //       PopupMenuItem(
-                      //         value: 'edit',
-                      //         child: Row(
-                      //           mainAxisAlignment:
-                      //           MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Text(
-                      //               'edit'.tr(),
-                      //               style: TextStyle(
-                      //                 color: AppColorManager.textGrey,
-                      //               ),
-                      //             ),
-                      //             SvgPicture.asset(
-                      //               AppIconManager.edit,
-                      //               color: AppColorManager.textGrey,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       PopupMenuItem(
-                      //         value: 'delete',
-                      //         child: Row(
-                      //           mainAxisAlignment:
-                      //           MainAxisAlignment.spaceBetween,
-                      //           children: [
-                      //             Text(
-                      //               'delete'.tr(),
-                      //               style: TextStyle(
-                      //                 color: AppColorManager.textGrey,
-                      //               ),
-                      //             ),
-                      //             SvgPicture.asset(
-                      //               AppIconManager.delete,
-                      //               color: AppColorManager.textGrey,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   );
-                      //
-                      //   if (selected == 'edit') {
-                      //     final input = await showGenericEditDialog(
-                      //       context,
-                      //       title: editDialogTitle,
-                      //       initialNameAr: secondaryName,
-                      //       initialNameEn: primaryName,
-                      //       initialImageUrl: imageUrl,
-                      //       nameArHint: nameArHint,
-                      //       nameEnHint: nameEnHint,
-                      //       pickImageText: pickImageText,
-                      //       noImageSelectedText: noImageSelectedText,
-                      //       confirmText: saveText,
-                      //       cancelText: cancelText,
-                      //       enableImage: enableImage,
-                      //       enableCity: enableCity,
-                      //       enableStatus: enableStatus,
-                      //       initialStatus: isActive,
-                      //       cityLabel: cityLabel,
-                      //       cityOptions: cityOptions,
-                      //       cityHint: cityHint,
-                      //       initialCityId: adapter.getCityId(entity),
-                      //     );
-                      //
-                      //     if (input == null) return;
-                      //
-                      //     onEdit(
-                      //       context,
-                      //       id,
-                      //       input.nameAr,
-                      //       input.nameEn,
-                      //       input.imageName,
-                      //       input.base64,
-                      //       input.status,
-                      //       input.removeImage,
-                      //       input.cityId,
-                      //     );
-                      //   } else if (selected == 'delete') {
-                      //     final confirmed = await showConfirmDialog(
-                      //       context,
-                      //       title: deleteDialogTitle,
-                      //       message: '$deleteDialogMessage $displayName?',
-                      //       confirmText: deleteText,
-                      //       cancelText: cancelText,
-                      //     );
-                      //     if (confirmed) onDelete(context, id);
-                      //   }
-                      // },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SvgPicture.asset(
-                          AppIconManager.dots,
-                          width: 20,
-                          height: 20,
-                          color: AppColorManager.textGrey,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Material(
+            color: AppColorManager.white,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      _buildStatusChip(statusName, statusColor),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SvgPicture.asset(
+                            AppIconManager.dots,
+                            width: 20,
+                            height: 20,
+                            color: AppColorManager.textGrey,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildImage(coverUrl),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildTitleSection(
-                        placeName,
-                        clientName,
-                        cityName,
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildImage(coverUrl),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildTitleSection(
+                          placeName,
+                          clientName,
+                          cityName,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
-                const SizedBox(height: 14),
-                const Divider(height: 1),
+                  const SizedBox(height: 14),
+                  const Divider(height: 1),
 
-                const SizedBox(height: 10),
-                _buildTimeline(nights),
+                  const SizedBox(height: 10),
+                  _buildTimeline(nights),
 
-                const SizedBox(height: 10),
-                const Divider(height: 1),
+                  const SizedBox(height: 10),
+                  const Divider(height: 1),
 
-                const SizedBox(height: 10),
-                _buildInfoGrid(
-                  totalPrice: totalPrice,
-                  rooms: rooms,
-                  adults: adults,
-                  children: children,
-                ),
+                  const SizedBox(height: 10),
+                  _buildInfoGrid(
+                    totalPrice: totalPrice,
+                    rooms: rooms,
+                    adults: adults,
+                    children: children,
+                  ),
 
-                const SizedBox(height: 8),
-                _buildBookingDate(),
-              ],
+                  _buildBookingDate(),
+                ],
+              ),
             ),
           ),
         ),
@@ -443,7 +346,6 @@ class ReservationContainer extends StatelessWidget {
   }
 }
 
-/// Timeline item (check-in / check-out)
 class _TimelineItem extends StatelessWidget {
   final String label;
   final String date;
@@ -505,7 +407,6 @@ class _TimelineItem extends StatelessWidget {
   }
 }
 
-/// Info tile (price, rooms, guests, booking date)
 class _InfoTile extends StatelessWidget {
   final String label;
   final String value;

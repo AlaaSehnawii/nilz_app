@@ -7,14 +7,14 @@ import '../../adapter/gift_entity_adapter.dart';
 import '../../cubit/gift_cubit.dart';
 
 class GiftContainer extends StatelessWidget {
-  final GiftEntity Gift;
+  final GiftEntity gift;
 
-  const GiftContainer({super.key, required this.Gift});
+  const GiftContainer({super.key, required this.gift});
 
   @override
   Widget build(BuildContext context) {
     return GenericEntityContainer<GiftEntity, GiftCubit>(
-      entity: Gift,
+      entity: gift,
       adapter: GiftEntityAdapter(),
       editDialogTitle: 'edit_Gift'.tr(),
       deleteDialogTitle: 'delete_Gift'.tr(),

@@ -111,6 +111,7 @@ class _MyDrawerState extends State<MyDrawer> {
           );
 
           if (result) {
+            // ignore: use_build_context_synchronously
             context.read<LoginCubit>().logout(context);
           }
         },

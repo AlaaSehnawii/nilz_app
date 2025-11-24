@@ -75,7 +75,6 @@ class PendingRequestContainer extends StatelessWidget {
               ],
             ),
             const Divider(height: 24),
-            // Details Grid
             Row(
               children: [
                 Expanded(

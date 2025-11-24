@@ -14,11 +14,13 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.showArrowBack,
     this.suffixIcon,
+    this.showSuffixIcon
   });
 
   final String title;
   final Widget? suffixIcon;
   final bool? showArrowBack;
+  final bool? showSuffixIcon;
 
   @override
   Size get preferredSize => Size.fromHeight(AppHeightManager.h9);
@@ -59,21 +61,24 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       actions: [
-        Padding(
-          padding: EdgeInsets.only(
-            right: LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w5point7
-                : 0,
-            left: !LanguageHelper.checkIfLTR(context: context)
-                ? AppWidthManager.w5point7
-                : 0,
-          ),
-          child: DropdownIconButton(
-            icon: SvgPicture.asset(
-              AppIconManager.nilz,
-              colorFilter: const ColorFilter.mode(
-                AppColorManager.black,
-                BlendMode.srcIn,
+        Visibility(
+          visible: showSuffixIcon ?? true,
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: LanguageHelper.checkIfLTR(context: context)
+                  ? AppWidthManager.w5point7
+                  : 0,
+              left: !LanguageHelper.checkIfLTR(context: context)
+                  ? AppWidthManager.w5point7
+                  : 0,
+            ),
+            child: DropdownIconButton(
+              icon: SvgPicture.asset(
+                AppIconManager.nilz,
+                colorFilter: const ColorFilter.mode(
+                  AppColorManager.black,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),

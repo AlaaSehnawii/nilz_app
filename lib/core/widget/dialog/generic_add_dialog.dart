@@ -227,7 +227,7 @@ Future<AddEntityResult?> showGenericAddDialog(
                           ),
                           const SizedBox(height: 10),
                           DropdownButtonFormField<String>(
-                            value: cityId,
+                            initialValue: cityId,
                             isExpanded: true,
                             decoration: InputDecoration(
                               hintText: cityHint,

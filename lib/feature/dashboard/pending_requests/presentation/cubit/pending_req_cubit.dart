@@ -14,7 +14,6 @@ class PendingRequestCubit extends Cubit<PendingRequestState> {
       : super(PendingRequestState.initail());
 
   getPendingRequest({ required BuildContext context}) async {
-    print('called cubit');
     emit(state.copyWith(status: CubitStatus.loading));
     final result = await usecase();
     //!Check if Bloc Closed
@@ -28,7 +27,6 @@ class PendingRequestCubit extends Cubit<PendingRequestState> {
       },
       (data) {
         emit(state.copyWith(status: CubitStatus.success, entity: data));
-        print("tooooooooooooooooooooooooooooooken");
       },
     );
   }

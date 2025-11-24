@@ -14,8 +14,6 @@ class ResStatisticsCubit extends Cubit<ResStatisticsState> {
       : super(ResStatisticsState.initail());
 
   getResStatistics({ required BuildContext context}) async {
-    print('called cubit');
-    emit(state.copyWith(status: CubitStatus.loading));
     final result = await usecase();
     //!Check if Bloc Closed
     if (isClosed) return;
@@ -28,7 +26,6 @@ class ResStatisticsCubit extends Cubit<ResStatisticsState> {
       },
       (data) {
         emit(state.copyWith(status: CubitStatus.success, entity: data));
-        print("tooooooooooooooooooooooooooooooken");
       },
     );
   }

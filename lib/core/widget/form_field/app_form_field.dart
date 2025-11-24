@@ -9,7 +9,7 @@ class AppTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final bool? enabled;
   final String? Function(String?)? validator;
-  final String? Function(String?)? onFilledSubmited;
+  final String? Function(String?)? onFilledSubmitted;
   final Function()? editingComplete;
   final String? Function(String?)? onChanged;
   final TextInputType? textInputType;
@@ -28,7 +28,7 @@ class AppTextFormField extends StatefulWidget {
   final String? hintText;
   final bool? outlinedBorder;
   final bool? expand;
-  final bool? autoFoucs;
+  final bool? autoFocus;
   final double? borderRadius;
   final EdgeInsetsGeometry? contentPadding;
   final bool? filled;
@@ -37,7 +37,7 @@ class AppTextFormField extends StatefulWidget {
   final bool? isPasswordField;
 
   const AppTextFormField(
-      {Key? key,
+      {super.key,
       this.borderRadius,
       this.minLines,
       this.filled,
@@ -50,7 +50,7 @@ class AppTextFormField extends StatefulWidget {
       this.contentPadding,
       this.controller,
       this.formKey,
-      this.autoFoucs,
+      this.autoFocus,
       this.validator,
       this.hintStyle,
       this.editingComplete,
@@ -62,14 +62,13 @@ class AppTextFormField extends StatefulWidget {
       this.labelText,
       this.textColor,
       this.labelColor,
-      this.onFilledSubmited,
+      this.onFilledSubmitted,
       this.initialValue,
       this.maxLines,
       this.prefixIcon,
       this.hintText,
       this.outlinedBorder,
-      this.isPasswordField})
-      : super(key: key);
+      this.isPasswordField});
 
   @override
   State<AppTextFormField> createState() => _AppTextFormFieldState();
@@ -86,13 +85,13 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         key: Key(widget.initialValue ?? ""),
         readOnly: widget.readOnly ?? false,
         textAlignVertical: widget.textAlignVertical,
-        onFieldSubmitted: widget.onFilledSubmited,
+        onFieldSubmitted: widget.onFilledSubmitted,
         validator: widget.validator,
         controller: widget.controller,
         focusNode: widget.focusNode,
         obscureText: widget.isPasswordField == true ? obscureText : false,
         onChanged: widget.onChanged,
-        autofocus: widget.autoFoucs ?? false,
+        autofocus: widget.autoFocus ?? false,
         onEditingComplete: widget.editingComplete,
         keyboardType: widget.textInputType,
         textInputAction: widget.textInputAction,

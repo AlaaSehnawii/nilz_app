@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:nilz_app/app/nilz_app.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+// ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/helper/app_info_helper.dart';
 import 'core/injection/injection_container.dart';

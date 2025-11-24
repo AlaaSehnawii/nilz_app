@@ -28,8 +28,8 @@ class PaymentEntityAdapter extends EntityAdapter<PaymentEntity> {
 
 
   @override
-  bool matchesQuery(PaymentEntity e, String query) {
+  bool matchesQuery(PaymentEntity entity, String query) {
     final q = query.toLowerCase();
-    return (e.clientName ?? '').toLowerCase().contains(q);
+    return (entity.clientName ?? '').toLowerCase().contains(q);
   }
 }
