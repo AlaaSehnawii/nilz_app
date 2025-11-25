@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nilz_app/core/resource/cubit_status_manager.dart';
 import 'package:nilz_app/core/resource/icon_manager.dart';
 import 'package:nilz_app/core/widget/loading/app_circular_progress_widget.dart';
-import 'package:nilz_app/core/widget/snack_bar/note_message.dart';
+import 'package:nilz_app/core/widget/bar/note_message.dart';
 import 'package:nilz_app/router/app_router.dart';
 import '../../../../../core/resource/color_manager.dart';
 import '../../../../../core/resource/font_manager.dart';

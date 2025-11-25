@@ -7,7 +7,7 @@ import 'package:path/path.dart' as p;
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../resource/icon_manager.dart';
-import '../text_form_field/text_form_field.dart';
+import '../form_field/text_form_field.dart';
 
 class SimpleOption {
   final String id;

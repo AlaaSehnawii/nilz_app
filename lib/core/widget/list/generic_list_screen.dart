@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/resource/icon_manager.dart';
-import 'package:nilz_app/core/widget/search_bar/search_bar.dart';
+import 'package:nilz_app/core/widget/bar/search_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../resource/cubit_status_manager.dart';
 import '../dialog/generic_add_dialog.dart';

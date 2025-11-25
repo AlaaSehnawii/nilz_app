@@ -43,6 +43,9 @@
      "inquiry": "استعلام",
      "nights": "ليالي",
      "guests": "الضيوف",
+     "arrive_date": "تاريخ الوصول",
+     "leave_date": "تاريخ المغادرة",
+     
 
      "advertisements": "الإعلانات",
      "management": "الإدارة",

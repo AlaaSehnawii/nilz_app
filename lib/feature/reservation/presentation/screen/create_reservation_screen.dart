@@ -1,27 +1,133 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
+import 'package:nilz_app/core/widget/date_picker/date_picker_field.dart';
+import 'package:nilz_app/core/widget/form_field/text_form_field.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
-import 'package:nilz_app/core/widget/app_bar/title_app_bar.dart';
-import '../../../../core/widget/text_form_field/text_form_field.dart';
+import 'package:nilz_app/core/widget/form_field/text_form_field/searchable_dropdown.dart';
+import 'package:nilz_app/feature/basic_data/data/repository/basic_data_repository.dart';
 
-class CreateReservationScreen extends StatelessWidget {
+class CreateReservationScreen extends StatefulWidget {
   const CreateReservationScreen({super.key});
 
   @override
+  State<CreateReservationScreen> createState() =>
+      _CreateReservationScreenState();
+}
+
+class _CreateReservationScreenState extends State<CreateReservationScreen> {
+  List<dynamic> _cities = [];
+  dynamic _selectedCity;
+  bool _isLoadingCities = true;
+
+  DateTime? _fromDate;
+  DateTime? _toDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCities();
+  }
+
+  Future<void> _loadCities() async {
+    final repository = context.read<BasicDataRepository>();
+    final result = await repository.getCity();
+
+    result.fold(
+      (failure) => _cities = [],
+      (success) => _cities = success.cities,
+    );
+
+    if (!mounted) return;
+    setState(() => _isLoadingCities = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final bool isArabic = context.locale.languageCode == 'ar';
+
     return Scaffold(
       backgroundColor: AppColorManager.background,
       appBar: MainAppBar(
         title: 'add_reservation'.tr(),
-        showArrowBack: false,
+        showArrowBack: true,
         showSuffixIcon: false,
       ),
       body: Column(
         children: [
-          MyTextFormField(hintText: "city".tr()),
-          Row(children: [Container(), Container()]),
-          MyTextFormField(),
-          Divider(),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: _isLoadingCities
+                ? const Center(child: CircularProgressIndicator())
+                : SearchableDropdown<dynamic>(
+                    items: _cities,
+                    selectedItem: _selectedCity,
+                    hintText: "city".tr(),
+                    labelBuilder: (city) {
+                      final en = city.name?.en ?? '';
+                      final ar = city.name?.ar ?? '';
+                      if (isArabic) {
+                        return ar.isNotEmpty ? ar : en;
+                      } else {
+                        return en.isNotEmpty ? en : ar;
+                      }
+                    },
+                    filterFn: (city, query) {
+                      if (query.isEmpty) return true;
+                      final q = query.toLowerCase();
+                      final en = (city.name?.en ?? '').toLowerCase();
+                      final ar = (city.name?.ar ?? '').toLowerCase();
+                      return en.contains(q) || ar.contains(q);
+                    },
+                    onChanged: (city) {
+                      setState(() => _selectedCity = city);
+                    },
+                  ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                Expanded(
+                  child: DatePickerField(
+                    label: 'arrive_date'.tr(),
+                    value: _fromDate,
+                    onChanged: (date) {
+                      setState(() {
+                        _fromDate = date;
+                        if (_toDate != null &&
+                            _fromDate != null &&
+                            _toDate!.isBefore(_fromDate!)) {
+                          _toDate = null;
+                        }
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: DatePickerField(
+                    label: 'leave_date'.tr(),
+                    value: _toDate,
+                    onChanged: (date) {
+                      setState(() {
+                        _toDate = date;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          const MyTextFormField(),
+
+          const Divider(),
+
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -29,7 +135,7 @@ class CreateReservationScreen extends StatelessWidget {
                 color: AppColorManager.white,
                 child: SingleChildScrollView(
                   child: Column(
-                    children: [
+                    children: const [
                       MyTextFormField(),
                       MyTextFormField(),
                       MyTextFormField(),

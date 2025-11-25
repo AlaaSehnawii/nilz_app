@@ -17,6 +17,7 @@ abstract class AppIconManager {
   static String arrowMenuLeft = '$_iconBasePath/arrow_menu_left.svg';
   static String arrowMenuRight = '$_iconBasePath/arrow_menu_right.svg';
   static const String arrowMenuDown = '$_iconBasePath/arrow_menu_down.svg';
+  static const String arrowMenuUp = '$_iconBasePath/arrow_menu_up.svg';
   static String aboutUs = '$_iconBasePath/about_us.svg';
   static String privacyPolicy = '$_iconBasePath/privacy_policy.svg';
   static String logout = '$_iconBasePath/logout.svg';

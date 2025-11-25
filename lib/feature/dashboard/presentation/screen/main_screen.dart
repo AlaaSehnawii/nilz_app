@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/resource/icon_manager.dart';
-import 'package:nilz_app/core/widget/app_bar/title_app_bar.dart';
+import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
 import 'package:nilz_app/feature/dashboard/pending_requests/presentation/widget/pending_req_list.dart';
 import 'package:nilz_app/feature/dashboard/res_statistics/presentation/widget/res_statistics_list.dart';
 import 'package:nilz_app/feature/drawer/drawer.dart';

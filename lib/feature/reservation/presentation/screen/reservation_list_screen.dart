@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilz_app/feature/basic_data/city/presentation/cubit/city_cubit.dart';
+import 'package:nilz_app/feature/basic_data/data/repository/basic_data_repository.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/create_reservation_screen.dart';
 import '../../../../core/injection/injection_container.dart' as di;
 import '../../../../core/resource/color_manager.dart';
-import '../../../../core/widget/search_bar/search_bar.dart';
+import '../../../../core/widget/bar/search_bar.dart';
 import '../cubit/reservation_cubit.dart';
 import '../widget/reservation_list.dart';
 
@@ -17,6 +19,7 @@ class ReservationListScreen extends StatefulWidget {
 
 class _ReservationListScreenState extends State<ReservationListScreen> {
   final _searchCtrl = TextEditingController();
+  // ignore: unused_field
   String _query = '';
 
   @override
@@ -38,14 +41,27 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
                       color: AppColorManager.denim,
                       textColor: AppColorManager.background,
                       fontWeight: FontWeight.w600,
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => BlocProvider(
-                              create: (_) =>
-                              di.sl<ReservationCubit>(),
-                              child: CreateReservationScreen(),
+                            builder: (_) => MultiRepositoryProvider(
+                              providers: [
+                                RepositoryProvider(
+                                  create: (_) => di.sl<BasicDataRepository>(),
+                                ),
+                              ],
+                              child: MultiBlocProvider(
+                                providers: [
+                                  BlocProvider(
+                                    create: (_) => di.sl<ReservationCubit>(),
+                                  ),
+                                  BlocProvider(
+                                    create: (_) => di.sl<CityCubit>(),
+                                  ),
+                                ],
+                                child: const CreateReservationScreen(),
+                              ),
                             ),
                           ),
                         );
