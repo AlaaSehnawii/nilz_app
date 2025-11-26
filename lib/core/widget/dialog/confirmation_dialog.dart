@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 
@@ -69,7 +71,7 @@ Future<bool> _showConfirmDialogInternal(
     builder: (dialogCtx) {
       return StatefulBuilder(
         builder: (ctx, setState) {
-          Future<void> _handleConfirm() async {
+          Future<void> handleConfirm() async {
             if (onConfirmAsync == null) {
               Navigator.pop(dialogCtx, true);
               return;
@@ -149,7 +151,7 @@ Future<bool> _showConfirmDialogInternal(
                     const SizedBox(width: 10),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: isLoading ? null : _handleConfirm,
+                        onPressed: isLoading ? null : handleConfirm,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primary,
                           shape: RoundedRectangleBorder(

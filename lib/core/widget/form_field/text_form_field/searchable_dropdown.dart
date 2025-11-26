@@ -1,3 +1,6 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
@@ -13,6 +16,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     required this.onChanged,
     this.selectedItem,
     this.hintText = '',
+    this.titleText = '',
   });
 
   final List<T> items;
@@ -21,6 +25,7 @@ class SearchableDropdown<T> extends StatefulWidget {
   final ValueChanged<T?> onChanged;
   final T? selectedItem;
   final String hintText;
+  final String titleText;
 
   @override
   State<SearchableDropdown<T>> createState() => _SearchableDropdownState<T>();
@@ -117,9 +122,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                   elevation: 4,
                   borderRadius: BorderRadius.circular(8),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: 35.h,
-                    ),
+                    constraints: BoxConstraints(maxHeight: 35.h),
                     child: Container(
                       width: fieldSize.width,
                       decoration: BoxDecoration(
@@ -134,7 +137,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                           ? Padding(
                               padding: EdgeInsets.all(2.h),
                               child: Text(
-                                'No results',
+                                'no_results_found'.tr(),
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   color: AppColorManager.textGrey,
@@ -158,8 +161,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
                                     label,
                                     style: TextStyle(
                                       fontSize: 14.sp,
-                                      color:
-                                          AppColorManager.textAppColor,
+                                      color: AppColorManager.textAppColor,
                                     ),
                                   ),
                                   trailing: isSelected
@@ -199,52 +201,71 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: TextFormField(
-        key: _fieldKey,
-        controller: _controller,
-        focusNode: _focusNode,
-        onChanged: _onChangedText,
-        decoration: InputDecoration(
-          fillColor: AppColorManager.background.withOpacity(0),
-          filled: true,
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: 5.w,
-            vertical: 2.h,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColorManager.backgroundGrey,
-              width: 1.3,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.titleText.isNotEmpty) ...[
+          Text(
+            widget.titleText,
+            style: TextStyle(
+              fontSize: 15.sp,
+              color: AppColorManager.black,
+              fontWeight: FontWeight.w500,
             ),
-            borderRadius: BorderRadius.circular(8.0),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColorManager.denim.withOpacity(0.6),
-              width: 1.3,
+          SizedBox(height: 0.8.h),
+        ],
+
+        CompositedTransformTarget(
+          link: _layerLink,
+          child: TextFormField(
+            key: _fieldKey,
+            controller: _controller,
+            focusNode: _focusNode,
+            onChanged: _onChangedText,
+            decoration: InputDecoration(
+              fillColor: AppColorManager.background.withOpacity(0),
+              filled: true,
+              isDense: true,
+              hintText: widget.hintText,
+              hintStyle: TextStyle(
+                fontSize: 14.sp,
+                color: AppColorManager.textGrey,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 5.w,
+                vertical: 2.h,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColorManager.backgroundGrey,
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColorManager.denim.withOpacity(0.6),
+                  width: 1.3,
+                ),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              suffixIcon: SvgPicture.asset(
+                _isOpen
+                    ? AppIconManager.arrowMenuUp
+                    : AppIconManager.arrowMenuDown,
+                fit: BoxFit.scaleDown,
+                color: AppColorManager.textGrey,
+              ),
             ),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          hintText: widget.hintText,
-          hintStyle: TextStyle(
-            fontSize: 14.sp,
-            color: AppColorManager.textGrey,
-          ),
-          suffixIcon: SvgPicture.asset(
-            _isOpen ? AppIconManager.arrowMenuUp : AppIconManager.arrowMenuDown,
-            color: AppColorManager.textGrey,
-            fit: BoxFit.scaleDown,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: AppColorManager.textAppColor,
+            ),
+            cursorColor: AppColorManager.textAppColor,
           ),
         ),
-        style: TextStyle(
-          fontSize: 14.sp,
-          color: AppColorManager.textAppColor,
-        ),
-        cursorColor: AppColorManager.textAppColor,
-      ),
+      ],
     );
   }
 }

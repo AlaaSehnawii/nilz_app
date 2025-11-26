@@ -10,7 +10,7 @@ import '../../resource/color_manager.dart';
 import '../../resource/image_manager.dart';
 class MainImageWidget extends StatelessWidget {
   const MainImageWidget({
-    Key? key,
+    super.key,
     this.imageUrl = '',
     this.imagePath,
     this.placeholderUrl,
@@ -19,7 +19,7 @@ class MainImageWidget extends StatelessWidget {
     this.height,
     this.shape,
     this.borderRadius,
-  }) : super(key: key);
+  });
   final String imageUrl;
   final String? imagePath;
   final String? placeholderUrl;

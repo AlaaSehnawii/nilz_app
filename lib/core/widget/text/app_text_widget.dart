@@ -22,7 +22,7 @@ class AppTextWidget extends StatefulWidget {
   final void Function()? onTap;
 
   const AppTextWidget({
-    Key? key,
+    super.key,
     required this.text,
     this.fontSize,
     this.height,
@@ -39,7 +39,7 @@ class AppTextWidget extends StatefulWidget {
     this.softWrap,
     this.padding,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<AppTextWidget> createState() => _AppTextWidgetState();

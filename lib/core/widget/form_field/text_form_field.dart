@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

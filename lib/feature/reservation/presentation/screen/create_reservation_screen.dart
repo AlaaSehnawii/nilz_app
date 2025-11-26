@@ -7,6 +7,8 @@ import 'package:nilz_app/core/widget/form_field/text_form_field.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/widget/form_field/text_form_field/searchable_dropdown.dart';
 import 'package:nilz_app/feature/basic_data/data/repository/basic_data_repository.dart';
+import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
+import 'package:nilz_app/feature/reservation/presentation/widget/room_settings_field.dart';
 
 class CreateReservationScreen extends StatefulWidget {
   const CreateReservationScreen({super.key});
@@ -19,10 +21,11 @@ class CreateReservationScreen extends StatefulWidget {
 class _CreateReservationScreenState extends State<CreateReservationScreen> {
   List<dynamic> _cities = [];
   dynamic _selectedCity;
-  bool _isLoadingCities = true;
 
   DateTime? _fromDate;
   DateTime? _toDate;
+
+  List<RoomInfo> _rooms = [];
 
   @override
   void initState() {
@@ -34,13 +37,14 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
     final repository = context.read<BasicDataRepository>();
     final result = await repository.getCity();
 
-    result.fold(
-      (failure) => _cities = [],
-      (success) => _cities = success.cities,
-    );
-
     if (!mounted) return;
-    setState(() => _isLoadingCities = false);
+
+    setState(() {
+      result.fold(
+        (failure) => _cities = [],
+        (success) => _cities = success.cities,
+      );
+    });
   }
 
   @override
@@ -58,32 +62,31 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.all(15),
-            child: _isLoadingCities
-                ? const Center(child: CircularProgressIndicator())
-                : SearchableDropdown<dynamic>(
-                    items: _cities,
-                    selectedItem: _selectedCity,
-                    hintText: "city".tr(),
-                    labelBuilder: (city) {
-                      final en = city.name?.en ?? '';
-                      final ar = city.name?.ar ?? '';
-                      if (isArabic) {
-                        return ar.isNotEmpty ? ar : en;
-                      } else {
-                        return en.isNotEmpty ? en : ar;
-                      }
-                    },
-                    filterFn: (city, query) {
-                      if (query.isEmpty) return true;
-                      final q = query.toLowerCase();
-                      final en = (city.name?.en ?? '').toLowerCase();
-                      final ar = (city.name?.ar ?? '').toLowerCase();
-                      return en.contains(q) || ar.contains(q);
-                    },
-                    onChanged: (city) {
-                      setState(() => _selectedCity = city);
-                    },
-                  ),
+            child: SearchableDropdown<dynamic>(
+              items: _cities,
+              selectedItem: _selectedCity,
+              titleText: "city".tr(),
+              hintText: "select_city".tr(),
+              labelBuilder: (city) {
+                final en = city.name?.en ?? '';
+                final ar = city.name?.ar ?? '';
+                if (isArabic) {
+                  return ar.isNotEmpty ? ar : en;
+                } else {
+                  return en.isNotEmpty ? en : ar;
+                }
+              },
+              filterFn: (city, query) {
+                if (query.isEmpty) return true;
+                final q = query.toLowerCase();
+                final en = (city.name?.en ?? '').toLowerCase();
+                final ar = (city.name?.ar ?? '').toLowerCase();
+                return en.contains(q) || ar.contains(q);
+              },
+              onChanged: (city) {
+                setState(() => _selectedCity = city);
+              },
+            ),
           ),
 
           Padding(
@@ -92,6 +95,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               children: [
                 Expanded(
                   child: DatePickerField(
+                    hint: 'arrive_date'.tr(),
                     label: 'arrive_date'.tr(),
                     value: _fromDate,
                     onChanged: (date) {
@@ -109,6 +113,7 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: DatePickerField(
+                    hint: 'leave_date'.tr(),
                     label: 'leave_date'.tr(),
                     value: _toDate,
                     onChanged: (date) {
@@ -124,7 +129,17 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
 
           const SizedBox(height: 12),
 
-          const MyTextFormField(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: RoomSettingsField(
+              rooms: _rooms,
+              onChanged: (rooms) {
+                setState(() {
+                  _rooms = rooms;
+                });
+              },
+            ),
+          ),
 
           const Divider(),
 

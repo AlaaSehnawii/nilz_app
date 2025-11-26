@@ -45,4 +45,6 @@ abstract class AppIconManager {
   static String profile = '$_iconBasePath/profile.svg';
   static String language = '$_iconBasePath/language.svg';
   static String data = '$_iconBasePath/data.svg';
+  static const String addCircle = "$_iconBasePath/add_circle.svg";
+  static const String minusCircle = "$_iconBasePath/minus_circle.svg";
 }

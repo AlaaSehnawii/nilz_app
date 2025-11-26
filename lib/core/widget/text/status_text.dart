@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:nilz_app/core/resource/font_manager.dart';
 import 'package:nilz_app/core/resource/size_manager.dart';

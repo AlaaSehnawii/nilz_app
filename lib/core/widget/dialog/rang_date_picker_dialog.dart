@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/resource/font_manager.dart';
 import 'package:nilz_app/core/resource/size_manager.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import '../button/main_app_button.dart';
 import '../text/app_text_widget.dart';
 

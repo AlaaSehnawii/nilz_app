@@ -1,6 +1,7 @@
 //Api url generator
 //Like base url , path , query
 
+import 'package:flutter/material.dart';
 import '../resource/constant_manager.dart';
 
 class ApiUrl {
@@ -19,7 +20,7 @@ class ApiUrl {
       baseUrl = firstBaseUrl;
     }
 
-    print(baseUrl + _link);
+    debugPrint(baseUrl + _link);
     return Uri.parse(baseUrl + _link);
   }
 
