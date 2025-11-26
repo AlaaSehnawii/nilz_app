@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -159,10 +161,10 @@ class _MyDrawerState extends State<MyDrawer> {
     final menuItems = [
       _MenuItem(
         icon: SvgPicture.asset(
-          AppIconManager.advertisement,
+          AppIconManager.menus,
           color: AppColorManager.textGrey,
         ),
-        title: "advertisements".tr(),
+        title: "menus".tr(),
         isLogout: false,
         children: [
           SubItem(title: "Reservation_type".tr(), onTap: () => debugPrint("A")),

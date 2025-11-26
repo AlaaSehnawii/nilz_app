@@ -19,7 +19,9 @@ class MyTextFormField extends StatelessWidget {
     this.validator,
     this.fillColor,
     this.hintTextStyle, this.inputTextStyle,
-    this.onChanged
+    this.onChanged,
+    this.onTap,
+
   });
 
   final InputBorder? focusedBorder;
@@ -34,6 +36,7 @@ class MyTextFormField extends StatelessWidget {
   final Function(String?)? validator;
   final Color? fillColor;
   final ValueChanged<String>? onChanged;
+  final VoidCallback? onTap;
 
 
   @override
@@ -41,6 +44,8 @@ class MyTextFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       onChanged: onChanged,
+      onTap: onTap,
+      readOnly: onTap != null,
       decoration: InputDecoration(
         fillColor: fillColor ?? AppColorManager.background.withOpacity(0),
         filled: true,

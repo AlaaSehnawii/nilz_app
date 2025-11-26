@@ -3,11 +3,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nilz_app/core/widget/button/main_app_button.dart';
+import 'package:nilz_app/core/widget/form_field/text_form_field.dart';
 import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
+import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/room_settings/counter_row.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
-
-import '../../../../core/resource/icon_manager.dart';
+import '../../../../../../core/resource/icon_manager.dart';
 
 class RoomSettingsField extends StatefulWidget {
   const RoomSettingsField({
@@ -16,10 +18,7 @@ class RoomSettingsField extends StatefulWidget {
     required this.onChanged,
   });
 
-  /// Current selected rooms (from the screen)
   final List<RoomInfo> rooms;
-
-  /// Called when user presses "Done" in dialog
   final ValueChanged<List<RoomInfo>> onChanged;
 
   @override
@@ -85,7 +84,7 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
             void changeAdults(int index, int delta) {
               final room = tempRooms[index];
               final newValue = room.adults + delta;
-              if (newValue < 0) return; // min 0 adult
+              if (newValue < 0) return;
               setDialogState(() {
                 room.adults = newValue;
               });
@@ -160,105 +159,49 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                                   SizedBox(height: 1.h),
 
                                   // Adults row
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('adults'.tr()),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                            icon: SvgPicture.asset(
-                                              AppIconManager.minusCircle,
-                                              color: AppColorManager.denim,
-                                            ),
-                                            onPressed: () =>
-                                                changeAdults(index, -1),
-                                          ),
-                                          Text(
-                                            room.adults.toString(),
-                                            style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: SvgPicture.asset(
-                                              AppIconManager.addCircle,
-                                              color: AppColorManager.denim,
-                                            ),
-                                            onPressed: () =>
-                                                changeAdults(index, 1),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  CounterRow(
+                                    label: 'adults'.tr(),
+                                    value: room.adults,
+                                    onDecrement: () => changeAdults(index, -1),
+                                    onIncrement: () => changeAdults(index, 1),
                                   ),
 
                                   SizedBox(height: 0.5.h),
 
                                   // Children row
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text('children'.tr()),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                            icon: SvgPicture.asset(
-                                              AppIconManager.minusCircle,
-                                              color: AppColorManager.denim,
-                                            ),
-                                            onPressed: () =>
-                                                changeChildren(index, -1),
-                                          ),
-                                          Text(
-                                            room.children.toString(),
-                                            style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: SvgPicture.asset(
-                                              AppIconManager.addCircle,
-                                              color: AppColorManager.denim,
-                                            ),
-                                            onPressed: () =>
-                                                changeChildren(index, 1),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  CounterRow(
+                                    label: 'children'.tr(),
+                                    value: room.children,
+                                    onDecrement: () =>
+                                        changeChildren(index, -1),
+                                    onIncrement: () => changeChildren(index, 1),
                                   ),
 
-                                  // Children name fields
                                   if (room.children > 0) ...[
                                     SizedBox(height: 1.h),
                                     Column(
                                       children: List.generate(room.children, (
                                         childIndex,
                                       ) {
+                                        final controller = TextEditingController(
+                                          text:
+                                              room.childrenNames.length >
+                                                  childIndex
+                                              ? room.childrenNames[childIndex]
+                                              : '',
+                                        );
                                         return Padding(
                                           padding: EdgeInsets.only(
                                             bottom: 0.8.h,
                                           ),
-                                          child: TextFormField(
-                                            initialValue:
-                                                room.childrenNames.length >
-                                                    childIndex
-                                                ? room.childrenNames[childIndex]
-                                                : '',
+                                          child: MyTextFormField(
+                                            controller: controller,
+                                            hintText:
+                                                '${'child'.tr()} ${childIndex + 1}',
                                             onChanged: (value) {
                                               room.childrenNames[childIndex] =
                                                   value;
                                             },
-                                            decoration: const InputDecoration(
-                                              isDense: true,
-                                              border: OutlineInputBorder(),
-                                              labelText: 'Child name',
-                                            ),
                                           ),
                                         );
                                       }),
@@ -294,13 +237,31 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                 ),
               ),
               actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('cancel'.tr()),
+                MainAppButton(
+                  onTap: () => Navigator.of(context).pop(),
+                  height: 40,
+                  width: 70,
+                  borderColor: AppColorManager.denim,
+                  outLinedBorde: true,
+                  padding: EdgeInsets.all(10),
+                  borderRadius: BorderRadius.circular(10),
+                  child: Text(
+                    'cancel'.tr(),
+                    style: TextStyle(color: AppColorManager.denim),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(tempRooms),
-                  child: Text('done'.tr()),
+                MainAppButton(
+                  onTap: () => Navigator.of(context).pop(tempRooms),
+                  height: 40,
+                  width: 70,
+                  borderColor: AppColorManager.denim,
+                  color: AppColorManager.denim,
+                  padding: EdgeInsets.all(10),
+                  borderRadius: BorderRadius.circular(10),
+                  child: Text(
+                    'done'.tr(),
+                    style: TextStyle(color: AppColorManager.background, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ],
             );
@@ -325,35 +286,12 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return MyTextFormField(
       controller: _summaryController,
-      readOnly: true,
+      hintText: 'room_settings'.tr(),
+      suffixIcon: const Icon(Icons.arrow_drop_down),
       onTap: _openDialog,
-      decoration: InputDecoration(
-        fillColor: AppColorManager.background.withOpacity(0),
-        filled: true,
-        isDense: true,
-        contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColorManager.backgroundGrey,
-            width: 1.3,
-          ),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppColorManager.denim.withOpacity(0.6),
-            width: 1.3,
-          ),
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        hintText: 'room_settings'.tr(),
-        hintStyle: TextStyle(fontSize: 14.sp, color: AppColorManager.textGrey),
-        suffixIcon: const Icon(Icons.arrow_drop_down),
-      ),
-      style: TextStyle(fontSize: 14.sp, color: AppColorManager.textAppColor),
-      cursorColor: AppColorManager.textAppColor,
+      onChanged: (_) {},
     );
   }
 }

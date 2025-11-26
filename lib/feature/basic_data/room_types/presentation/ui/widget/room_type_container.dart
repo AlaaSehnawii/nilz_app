@@ -7,14 +7,14 @@ import '../../adapter/room_type_entity_adapter.dart';
 import '../../cubit/room_type_cubit.dart';
 
 class RoomTypeContainer extends StatelessWidget {
-  final RoomTypeEntity RoomType;
+  final RoomTypeEntity roomType;
 
-  const RoomTypeContainer({super.key, required this.RoomType});
+  const RoomTypeContainer({super.key, required this.roomType});
 
   @override
   Widget build(BuildContext context) {
     return GenericEntityContainer<RoomTypeEntity, RoomTypeCubit>(
-      entity: RoomType,
+      entity: roomType,
       adapter: RoomTypeEntityAdapter(),
       editDialogTitle: 'edit_RoomType'.tr(),
       deleteDialogTitle: 'delete_RoomType'.tr(),

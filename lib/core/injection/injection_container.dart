@@ -13,6 +13,12 @@ import 'package:nilz_app/feature/dashboard/pending_requests/presentation/cubit/p
 import 'package:nilz_app/feature/dashboard/res_statistics/data/datasource/res_statistics_remote.dart';
 import 'package:nilz_app/feature/dashboard/res_statistics/presentation/cubit/res_statistics_cubit.dart';
 import 'package:nilz_app/feature/finance/gift/presentation/cubit/gift_cubit.dart';
+import 'package:nilz_app/feature/posts/data/datasource/post_remote.dart';
+import 'package:nilz_app/feature/posts/data/repository/post_repository_impl.dart';
+import 'package:nilz_app/feature/posts/domain/repository/post_repository.dart';
+import 'package:nilz_app/feature/posts/domain/usecase/create_post_usecase.dart';
+import 'package:nilz_app/feature/posts/domain/usecase/post_usecase.dart';
+import 'package:nilz_app/feature/posts/presentation/cubit/post_cubit.dart';
 import 'package:nilz_app/feature/reservation/domain/usecase/create_reservation_usecase.dart';
 import '../../feature/auth/login/data/datasource/remote/auth_remote.dart';
 import '../../feature/auth/login/data/repository/auth_repository_impl.dart';
@@ -131,6 +137,21 @@ Future<void> initDI() async {
   );
   sl.registerFactory<ReservationCubit>(
     () => ReservationCubit(useCase: sl(), createReservationUseCase: sl()),
+  );
+
+  // ============ Post List ===========
+  sl.registerLazySingleton<PostRemote>(() => PostRemoteImpl());
+  sl.registerLazySingleton<PostRepository>(
+    () => PostRepositoryImpl(remote: sl()),
+  );
+  sl.registerLazySingleton<PostUseCase>(
+    () => PostUseCase(repository: sl()),
+  );
+  sl.registerLazySingleton<CreatePostUseCase>(
+    () => CreatePostUseCase(repository: sl()),
+  );
+  sl.registerFactory<PostCubit>(
+    () => PostCubit(useCase: sl(), createPostUseCase: sl()),
   );
 
   // ///////////////////////// Basic Data ////////////////////////////////

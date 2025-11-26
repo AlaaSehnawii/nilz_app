@@ -27,9 +27,9 @@ class RoomTypeEntityAdapter extends EntityAdapter<RoomTypeEntity> {
   String? getCityId(RoomTypeEntity e) => null;
 
   @override
-  bool matchesQuery(RoomTypeEntity e, String query) {
+  bool matchesQuery(RoomTypeEntity entity, String query) {
     final q = query.toLowerCase();
-    return (e.name?.en ?? '').toLowerCase().contains(q) ||
-        (e.name?.ar ?? '').toLowerCase().contains(q);
+    return (entity.name?.en ?? '').toLowerCase().contains(q) ||
+        (entity.name?.ar ?? '').toLowerCase().contains(q);
   }
 }

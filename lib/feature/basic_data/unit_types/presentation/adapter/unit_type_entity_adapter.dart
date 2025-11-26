@@ -28,9 +28,9 @@ class UnitTypeEntityAdapter extends EntityAdapter<UnitTypeEntity> {
 
 
   @override
-  bool matchesQuery(UnitTypeEntity e, String query) {
+  bool matchesQuery(UnitTypeEntity entity, String query) {
     final q = query.toLowerCase();
-    return (e.name?.en ?? '').toLowerCase().contains(q) ||
-        (e.name?.ar ?? '').toLowerCase().contains(q);
+    return (entity.name?.en ?? '').toLowerCase().contains(q) ||
+        (entity.name?.ar ?? '').toLowerCase().contains(q);
   }
 }

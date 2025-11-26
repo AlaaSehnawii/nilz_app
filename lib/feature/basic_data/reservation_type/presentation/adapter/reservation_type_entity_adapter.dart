@@ -28,9 +28,9 @@ class ReservationTypeEntityAdapter
   String? getCityId(ReservationTypeEntity entity) => null;
 
   @override
-  bool matchesQuery(ReservationTypeEntity e, String query) {
+  bool matchesQuery(ReservationTypeEntity entity, String query) {
     final q = query.toLowerCase();
-    return (e.name?.en ?? '').toLowerCase().contains(q) ||
-        (e.name?.ar ?? '').toLowerCase().contains(q);
+    return (entity.name?.en ?? '').toLowerCase().contains(q) ||
+        (entity.name?.ar ?? '').toLowerCase().contains(q);
   }
 }

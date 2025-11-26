@@ -48,7 +48,7 @@ class RoomTypeList extends StatelessWidget {
       },
       getStatus: (state) => state.status,
       getError: (state) => state.error,
-      getItems: (state) => state.entity.RoomTypes,
+      getItems: (state) => state.entity.roomTypes,
     );
   }
 }

@@ -60,7 +60,7 @@ class RoomTypeListScreen extends StatelessWidget {
       enableImage: true,
       getStatus: (state) => state.status,
       getError: (state) => state.error,
-      getItems: (state) => state.entity.RoomTypes,
+      getItems: (state) => state.entity.roomTypes,
     );
   }
 }

@@ -27,10 +27,10 @@ class BedTypeEntityAdapter extends EntityAdapter<BedTypeEntity> {
   String? getCityId(BedTypeEntity e) => null;
 
   @override
-  bool matchesQuery(BedTypeEntity e, String query) {
+  bool matchesQuery(BedTypeEntity entity, String query) {
     final q = query.toLowerCase();
-    return (e.name?.en ?? '').toLowerCase().contains(q) ||
-        (e.name?.ar ?? '').toLowerCase().contains(q);
+    return (entity.name?.en ?? '').toLowerCase().contains(q) ||
+        (entity.name?.ar ?? '').toLowerCase().contains(q);
   }
 
 }

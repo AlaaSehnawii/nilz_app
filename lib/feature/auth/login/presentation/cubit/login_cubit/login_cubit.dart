@@ -1,4 +1,7 @@
 // ignore: depend_on_referenced_packages
+// ignore_for_file: use_build_context_synchronously
+
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:nilz_app/core/api/api_error/api_error.dart';
@@ -19,8 +22,7 @@ class LoginCubit extends Cubit<LoginState> {
       : super(LoginState.initial());
 
   login({ required BuildContext context,required LoginRequestEntity entity}) async {
-    print('called cubit mmmmmmmmmmmmmmmmmmmm');
-
+    
     emit(state.copyWith(status: CubitStatus.loading));
     final result = await useCase(entity: entity);
     //!Check if Bloc Closed

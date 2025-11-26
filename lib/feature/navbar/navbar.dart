@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/feature/dashboard/presentation/screen/main_screen.dart';
 import 'package:nilz_app/feature/dashboard/rating_statistics/presentation/cubit/rating_statistics_cubit.dart';
-import 'package:nilz_app/feature/menus/ui/screen/menus_screen.dart';
+import 'package:nilz_app/feature/posts/presentation/cubit/post_cubit.dart';
+import 'package:nilz_app/feature/posts/presentation/ui/screen/post_list_screen.dart';
 import 'package:nilz_app/feature/reservation/presentation/cubit/reservation_cubit.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/reservation_list_screen.dart';
 import '../../core/injection/injection_container.dart' as di;
@@ -27,7 +30,11 @@ class _NavBarState extends State<NavBar> {
   int page = 1;
 
   late final List<Widget> _pages = <Widget>[
-    MenusScreen(),
+    BlocProvider(
+      create: (_) => di.sl<PostCubit>(),
+      child:  const PostListScreen(),
+      
+    ),
     BlocProvider(
       create: (_) => di.sl<ResStatisticsCubit>(),
       child: const MainScreen(),
@@ -45,7 +52,6 @@ class _NavBarState extends State<NavBar> {
         BlocProvider<LoginCubit>(create: (_) => di.sl<LoginCubit>()),
         //  --------------------------global cubits here
       ],
-      // ignore: deprecated_member_use
       child: WillPopScope(
         onWillPop: () async {
           final result = await showConfirmDialog(
@@ -130,8 +136,8 @@ class _NavBarState extends State<NavBar> {
               children: [
                 Expanded(
                   child: _NavItem(
-                    icon: AppIconManager.menus,
-                    label: "menus".tr(),
+                    icon: AppIconManager.advertisement,
+                    label: "advertisements".tr(),
                     selected: page == 0,
                     onTap: () => setState(() => page = 0),
                   ),
@@ -184,7 +190,6 @@ class _NavItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // ignore: deprecated_member_use
           SvgPicture.asset(icon, color: iconColor, height: 30, width: 30),
           Text(
             label,

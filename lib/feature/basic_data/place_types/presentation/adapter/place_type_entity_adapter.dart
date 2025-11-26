@@ -27,9 +27,9 @@ class PlaceTypeEntityAdapter extends EntityAdapter<PlaceTypeEntity> {
   String? getCityId(PlaceTypeEntity e) => null;
 
   @override
-  bool matchesQuery(PlaceTypeEntity e, String query) {
+  bool matchesQuery(PlaceTypeEntity entity, String query) {
     final q = query.toLowerCase();
-    return (e.name?.en ?? '').toLowerCase().contains(q) ||
-        (e.name?.ar ?? '').toLowerCase().contains(q);
+    return (entity.name?.en ?? '').toLowerCase().contains(q) ||
+        (entity.name?.ar ?? '').toLowerCase().contains(q);
   }
 }

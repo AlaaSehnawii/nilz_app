@@ -65,7 +65,7 @@ class MainAppButton extends StatelessWidget {
           borderRadius:
               borderRadius ?? BorderRadius.circular(AppRadiusManager.r3),
         ),
-        child: child,
+        child: Center(child: child),
       ),
     );
   }

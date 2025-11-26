@@ -14,9 +14,6 @@ class PendingRequestRemoteImpl extends PendingRequestRemote {
   Future<PendingRequestResponseEntity> pendingRequest() async {
     final response =
         await ApiMethods().get(url: ApiGetUrl.getPendingRequests);
-    print("PendingRequest");
-    print(response.statusCode);
-    print(response.body);
     if (ApiStatusCode.success().contains(response.statusCode)) {
 
       return pendingRequestResponseEntityFromJson(response.body);

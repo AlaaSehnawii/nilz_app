@@ -4,11 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 
 class CreateReservationCard extends StatefulWidget {
+  const CreateReservationCard({super.key});
+
   @override
   State<CreateReservationCard> createState() => _CreateReservationCardState();
 }
 
 class _CreateReservationCardState extends State<CreateReservationCard> {
+  // List<dynamic> _places = [];
+  // dynamic _selectedPlace;
+
+  // List<dynamic> _roomTypes = [];
+  // dynamic _selectedRoomType;
+
+  // List<dynamic> _users = [];
+  // dynamic _selectedUser;
+
+  // List<dynamic> _salesEmployees = [];
+  // dynamic _selectedSalesEmployee;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _loadPlaces();
+  //   _loadRoomTypes();
+  //   _loadUsers();
+  //   _loadSalesEmployees();
+  // }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Expanded(

@@ -3,6 +3,7 @@ class ApiGetUrl {
   static String getPendingRequests =
       "api/statistics/pendingReservations?skip=0&limit=1&sortKey=createdAt&sortOrder=-1";
   static String getReservation = "api/reservation";
+  static String getPost = "api/post";
   static String getCity = "api/city";
   static String getBedType = "api/bedType";
   static String getRoomType = "api/room-types";
@@ -19,6 +20,7 @@ class ApiPostUrl {
   static String login = "api/email-auth/login";
   static String logout = "api/auth/logout";
   static String createReservation = "api/reservation";
+  static String addPost = "api/post";
   static String addCity = "api/city";
   static String addBedType = "api/bedType";
   static String addRoomType = "api/room-types";
@@ -32,6 +34,7 @@ class ApiPostUrl {
 }
 
 class ApiDeleteUrl {
+  static String deletePost = "api/post/";
   static String deleteCity = "api/city/";
   static String deleteBedType = "api/bedType/";
   static String deleteRoomType = "api/room-types/";
@@ -49,6 +52,7 @@ class ApiPutUrl {}
 class ApiPatchUrl {
   static String cancelReservation = "";
   static String updateReservation = "api/reservation/";
+  static String editPost = "api/post/";
   static String editCity = "api/city/";
   static String editBedType = "api/bedType/";
   static String editRoomType = "api/room-types/";

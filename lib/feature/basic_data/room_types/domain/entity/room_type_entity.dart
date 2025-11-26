@@ -31,7 +31,7 @@ class RoomTypesApiResponseEntity {
 
   int? get statusCode => _statusCode;
   String? get message => _message;
-  List<RoomTypeEntity> get RoomTypes => _data ?? const [];
+  List<RoomTypeEntity> get roomTypes => _data ?? const [];
 
   Map<String, dynamic> toJson() => {
     "statusCode": _statusCode,

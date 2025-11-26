@@ -59,7 +59,7 @@ class PlaceTypeListScreen extends StatelessWidget {
       },
       getStatus: (state) => state.status,
       getError: (state) => state.error,
-      getItems: (state) => state.entity.PlaceTypes,
+      getItems: (state) => state.entity.placeTypes,
     );
   }
 }

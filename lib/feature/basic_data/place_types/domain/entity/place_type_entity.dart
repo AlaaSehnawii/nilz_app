@@ -31,7 +31,7 @@ class PlaceTypesApiResponseEntity {
 
   int? get statusCode => _statusCode;
   String? get message => _message;
-  List<PlaceTypeEntity> get PlaceTypes => _data ?? const [];
+  List<PlaceTypeEntity> get placeTypes => _data ?? const [];
 
   Map<String, dynamic> toJson() => {
     if (_statusCode != null) 'statusCode': _statusCode,

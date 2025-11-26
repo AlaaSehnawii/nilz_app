@@ -8,7 +8,7 @@ import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/widget/form_field/text_form_field/searchable_dropdown.dart';
 import 'package:nilz_app/feature/basic_data/data/repository/basic_data_repository.dart';
 import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
-import 'package:nilz_app/feature/reservation/presentation/widget/room_settings_field.dart';
+import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/room_settings/room_settings_field.dart';
 
 class CreateReservationScreen extends StatefulWidget {
   const CreateReservationScreen({super.key});
@@ -140,6 +140,8 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
               },
             ),
           ),
+
+          SizedBox(height: 6),
 
           const Divider(),
 
