@@ -90,7 +90,6 @@ class _DatePickerFieldState extends State<DatePickerField> {
         SizedBox(height: 0.8.h),
 
         TextFormField(
-          // ❌ removed initialValue
           controller: _controller,
           readOnly: true,
           onTap: _pickDate,

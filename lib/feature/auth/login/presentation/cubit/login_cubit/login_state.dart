@@ -1,6 +1,6 @@
 import 'package:nilz_app/core/resource/cubit_status_manager.dart';
 import 'package:nilz_app/feature/auth/login/domain/entity/response/login_response_entity.dart';
-import 'package:nilz_app/feature/basic_data/bed_types/presentation/cubit/bed_type_state.dart';
+import 'package:nilz_app/feature/drawer/basic_data/bed_types/presentation/cubit/bed_type_state.dart';
 
 class LoginState extends Equatable {
   final String error;

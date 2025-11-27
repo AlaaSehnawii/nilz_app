@@ -14,6 +14,7 @@ class ApiGetUrl {
   static String getService = "api/service";
   static String getGift = "api/gift?searchKey";
   static String getPayment = "api/payment";
+  static String getUnit = "api/unit";
 }
 
 class ApiPostUrl {
@@ -31,6 +32,7 @@ class ApiPostUrl {
   static String addService = "api/service";
   static String addGift = "api/gift";
   static String addPayment = "api/payment";
+  static String addUnit = "api/unit";
 }
 
 class ApiDeleteUrl {
@@ -45,6 +47,7 @@ class ApiDeleteUrl {
   static String deleteService = "api/service/";
   static String deleteGift = "api/gift/";
   static String deletePayment = "api/payment/";
+  static String deleteUnit = "api/unit/";
 }
 
 class ApiPutUrl {}
@@ -63,4 +66,5 @@ class ApiPatchUrl {
   static String editService = "api/service/";
   static String editGift = "api/gift/";
   static String editPayment = "api/payment/";
+  static String editUnit = "api/unit/";
 }

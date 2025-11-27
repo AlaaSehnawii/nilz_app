@@ -58,7 +58,6 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
   }
 
   Future<void> _openDialog() async {
-    // create a local editable copy
     List<RoomInfo> tempRooms = widget.rooms.isEmpty
         ? [RoomInfo(adults: 0, children: 0)]
         : widget.rooms.map((r) => r.copy()).toList();
@@ -109,159 +108,163 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
               });
             }
 
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: Text('room_settings'.tr()),
-              content: SizedBox(
-                width: 90.w,
-                height: 60.h,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: tempRooms.length,
-                        itemBuilder: (context, index) {
-                          final room = tempRooms[index];
-                          return Card(
-                            margin: EdgeInsets.only(bottom: 1.5.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(2.h),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+            return Column(
+              children: [
+                AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: Text('room_settings'.tr()),
+                  content: SizedBox(
+                    width: 90.w,
+                    height: 60.h,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: tempRooms.length,
+                            itemBuilder: (context, index) {
+                              final room = tempRooms[index];
+                              return Card(
+                                margin: EdgeInsets.only(bottom: 1.5.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(2.h),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        '${'room'.tr()} ${index + 1}',
-                                        style: TextStyle(
-                                          fontSize: 15.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      if (tempRooms.length > 1)
-                                        IconButton(
-                                          icon: SvgPicture.asset(
-                                            AppIconManager.delete,
-                                            color: AppColorManager.grey,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            '${'room'.tr()} ${index + 1}',
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                          onPressed: () => removeRoom(index),
+                                          if (tempRooms.length > 1)
+                                            IconButton(
+                                              icon: SvgPicture.asset(
+                                                AppIconManager.delete,
+                                                color: AppColorManager.grey,
+                                              ),
+                                              onPressed: () => removeRoom(index),
+                                            ),
+                                        ],
+                                      ),
+                
+                                      SizedBox(height: 1.h),
+                
+                                      // Adults row
+                                      CounterRow(
+                                        label: 'adults'.tr(),
+                                        value: room.adults,
+                                        onDecrement: () => changeAdults(index, -1),
+                                        onIncrement: () => changeAdults(index, 1),
+                                      ),
+                
+                                      SizedBox(height: 0.5.h),
+                
+                                      // Children row
+                                      CounterRow(
+                                        label: 'children'.tr(),
+                                        value: room.children,
+                                        onDecrement: () =>
+                                            changeChildren(index, -1),
+                                        onIncrement: () => changeChildren(index, 1),
+                                      ),
+                
+                                      if (room.children > 0) ...[
+                                        SizedBox(height: 1.h),
+                                        Column(
+                                          children: List.generate(room.children, (
+                                            childIndex,
+                                          ) {
+                                            final controller = TextEditingController(
+                                              text:
+                                                  room.childrenNames.length >
+                                                      childIndex
+                                                  ? room.childrenNames[childIndex]
+                                                  : '',
+                                            );
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                bottom: 0.8.h,
+                                              ),
+                                              child: MyTextFormField(
+                                                controller: controller,
+                                                hintText:
+                                                    '${'child'.tr()} ${childIndex + 1}',
+                                                onChanged: (value) {
+                                                  room.childrenNames[childIndex] =
+                                                      value;
+                                                },
+                                              ),
+                                            );
+                                          }),
                                         ),
+                                      ],
                                     ],
                                   ),
-
-                                  SizedBox(height: 1.h),
-
-                                  // Adults row
-                                  CounterRow(
-                                    label: 'adults'.tr(),
-                                    value: room.adults,
-                                    onDecrement: () => changeAdults(index, -1),
-                                    onIncrement: () => changeAdults(index, 1),
-                                  ),
-
-                                  SizedBox(height: 0.5.h),
-
-                                  // Children row
-                                  CounterRow(
-                                    label: 'children'.tr(),
-                                    value: room.children,
-                                    onDecrement: () =>
-                                        changeChildren(index, -1),
-                                    onIncrement: () => changeChildren(index, 1),
-                                  ),
-
-                                  if (room.children > 0) ...[
-                                    SizedBox(height: 1.h),
-                                    Column(
-                                      children: List.generate(room.children, (
-                                        childIndex,
-                                      ) {
-                                        final controller = TextEditingController(
-                                          text:
-                                              room.childrenNames.length >
-                                                  childIndex
-                                              ? room.childrenNames[childIndex]
-                                              : '',
-                                        );
-                                        return Padding(
-                                          padding: EdgeInsets.only(
-                                            bottom: 0.8.h,
-                                          ),
-                                          child: MyTextFormField(
-                                            controller: controller,
-                                            hintText:
-                                                '${'child'.tr()} ${childIndex + 1}',
-                                            onChanged: (value) {
-                                              room.childrenNames[childIndex] =
-                                                  value;
-                                            },
-                                          ),
-                                        );
-                                      }),
-                                    ),
-                                  ],
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-
-                    // Add room button
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton.icon(
-                        onPressed: addRoom,
-                        icon: SvgPicture.asset(
-                          AppIconManager.add,
-                          color: AppColorManager.denim,
-                        ),
-                        label: Text(
-                          'add_room'.tr(),
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: AppColorManager.denim,
+                                ),
+                              );
+                            },
                           ),
                         ),
+                
+                        // Add room button
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton.icon(
+                            onPressed: addRoom,
+                            icon: SvgPicture.asset(
+                              AppIconManager.add,
+                              color: AppColorManager.denim,
+                            ),
+                            label: Text(
+                              'add_room'.tr(),
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: AppColorManager.denim,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    MainAppButton(
+                      onTap: () => Navigator.of(context).pop(),
+                      height: 40,
+                      width: 70,
+                      borderColor: AppColorManager.denim,
+                      outLinedBorde: true,
+                      padding: EdgeInsets.all(10),
+                      borderRadius: BorderRadius.circular(10),
+                      child: Text(
+                        'cancel'.tr(),
+                        style: TextStyle(color: AppColorManager.denim),
+                      ),
+                    ),
+                    MainAppButton(
+                      onTap: () => Navigator.of(context).pop(tempRooms),
+                      height: 40,
+                      width: 70,
+                      borderColor: AppColorManager.denim,
+                      color: AppColorManager.denim,
+                      padding: EdgeInsets.all(10),
+                      borderRadius: BorderRadius.circular(10),
+                      child: Text(
+                        'done'.tr(),
+                        style: TextStyle(color: AppColorManager.background, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
-                ),
-              ),
-              actions: [
-                MainAppButton(
-                  onTap: () => Navigator.of(context).pop(),
-                  height: 40,
-                  width: 70,
-                  borderColor: AppColorManager.denim,
-                  outLinedBorde: true,
-                  padding: EdgeInsets.all(10),
-                  borderRadius: BorderRadius.circular(10),
-                  child: Text(
-                    'cancel'.tr(),
-                    style: TextStyle(color: AppColorManager.denim),
-                  ),
-                ),
-                MainAppButton(
-                  onTap: () => Navigator.of(context).pop(tempRooms),
-                  height: 40,
-                  width: 70,
-                  borderColor: AppColorManager.denim,
-                  color: AppColorManager.denim,
-                  padding: EdgeInsets.all(10),
-                  borderRadius: BorderRadius.circular(10),
-                  child: Text(
-                    'done'.tr(),
-                    style: TextStyle(color: AppColorManager.background, fontWeight: FontWeight.w600),
-                  ),
                 ),
               ],
             );
@@ -289,7 +292,6 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
     return MyTextFormField(
       controller: _summaryController,
       hintText: 'room_settings'.tr(),
-      suffixIcon: const Icon(Icons.arrow_drop_down),
       onTap: _openDialog,
       onChanged: (_) {},
     );
