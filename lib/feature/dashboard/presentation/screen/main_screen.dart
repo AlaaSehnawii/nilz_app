@@ -1,15 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
-import 'package:nilz_app/core/resource/icon_manager.dart';
-import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
 import 'package:nilz_app/feature/dashboard/pending_requests/presentation/widget/pending_req_list.dart';
 import 'package:nilz_app/feature/dashboard/res_statistics/presentation/widget/res_statistics_list.dart';
-import 'package:nilz_app/feature/drawer/drawer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,15 +15,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  bool isDrawerOpen = false;
-
-  void toggleDrawer() => setState(() => isDrawerOpen = !isDrawerOpen);
 
   List<String> get _tabTitles => [
-    'statistics'.tr(),
-    'pending_requests'.tr(),
-    'rating'.tr(),
-  ];
+        'statistics'.tr(),
+        'pending_requests'.tr(),
+        'rating'.tr(),
+      ];
 
   final List<IconData> _tabIcons = [
     Icons.pending_actions,
@@ -39,101 +31,50 @@ class _MainScreenState extends State<MainScreen> {
   Widget _getCurrentWidget() {
     switch (_selectedIndex) {
       case 0:
-        return ResStatisticsList();
+        return const ResStatisticsList();
       case 1:
-        return PendingRequestList();
+        return const PendingRequestList();
       default:
-        return PendingRequestList();
+        return const PendingRequestList();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColorManager.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: kToolbarHeight),
-              child: Row(
-                children: [
-                  Container(
-                    width: 30,
-                    decoration: BoxDecoration(
-                      color: AppColorManager.white,
-                      border: Border(
-                        right: BorderSide(
-                          color: AppColorManager.backgroundGrey.withOpacity(
-                            0.3,
-                          ),
-                          width: 5,
-                        ),
-                      ),
-                    ),
-                    child: Column(
-                      children: List.generate(
-                        _tabTitles.length,
-                        (index) => _buildNavItem(index),
-                      ),
-                    ),
-                  ),
-
-                  Expanded(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      child: _getCurrentWidget(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(
-              height: kToolbarHeight,
-              width: double.infinity,
-              child: MainAppBar(
-                title: 'dashboard'.tr(),
-                showArrowBack: false,
-                suffixIcon: GestureDetector(
-                  onTap: toggleDrawer,
-                  child: SvgPicture.asset(AppIconManager.menu),
+    return SafeArea(
+      // 👇 IMPORTANT: only protect the top; don't add bottom padding
+      top: true,
+      bottom: false,
+      child: Row(
+        children: [
+          // LEFT SIDE VERTICAL TABS
+          Container(
+            width: 30,
+            decoration: BoxDecoration(
+              color: AppColorManager.white,
+              border: Border(
+                right: BorderSide(
+                  color: AppColorManager.backgroundGrey.withOpacity(0.3),
+                  width: 5,
                 ),
               ),
             ),
-
-            if (isDrawerOpen)
-              Positioned.fill(
-                child: GestureDetector(
-                  onTap: toggleDrawer,
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 250),
-                    opacity: 1.0,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                      child: Container(
-                        color: AppColorManager.black.withOpacity(0.2),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeInOut,
-              top: 0,
-              bottom: 0,
-              left: isDrawerOpen ? 0 : -300,
-              child: Container(
-                width: 300,
-                height: double.infinity,
-                color: AppColorManager.white,
-                child: const MyDrawer(),
+            child: Column(
+              children: List.generate(
+                _tabTitles.length,
+                (index) => _buildNavItem(index),
               ),
             ),
-          ],
-        ),
+          ),
+
+          // RIGHT SIDE CONTENT
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: _getCurrentWidget(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -178,7 +119,8 @@ class _MainScreenState extends State<MainScreen> {
                         ? AppColorManager.denim
                         : AppColorManager.textAppColor.withOpacity(0.6),
                     fontSize: 11,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.w500,
                   ),
                 ),
               ),

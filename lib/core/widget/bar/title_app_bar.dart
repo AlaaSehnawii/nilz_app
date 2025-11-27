@@ -89,7 +89,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-/// Simple enum to describe the menu items
+///  menu items
 enum AppBarMenuItem { profile, notifications, language, settings }
 
 class AppBarMenuButton extends StatelessWidget {
