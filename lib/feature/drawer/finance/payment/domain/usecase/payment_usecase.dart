@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:nilz_app/core/api/api_error/api_failures.dart';
-import 'package:nilz_app/feature/finance/Payment/domain/entity/Payment_entity.dart';
+import 'package:nilz_app/feature/drawer/finance/payment/domain/entity/payment_entity.dart';
 import '../../../data/repository/finance_repository.dart';
 
 class PaymentUseCase {

@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilz_app/feature/drawer/finance/payment/domain/entity/payment_entity.dart';
 import '../../../../../../../core/widget/list/generic_entity_container.dart';
-import '../../../../../../finance/payment/domain/entity/Payment_entity.dart';
 import '../../adapter/payment_entity_adapter.dart';
 import '../../cubit/payment_cubit.dart';
 

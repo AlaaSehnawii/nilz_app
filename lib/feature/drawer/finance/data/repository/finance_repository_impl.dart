@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:nilz_app/core/api/connector.dart';
 import 'package:nilz_app/feature/drawer/finance/gift/domain/entity/gift_entity.dart';
+import 'package:nilz_app/feature/drawer/finance/payment/domain/entity/payment_entity.dart';
 import '../../../../../core/api/api_error/api_failures.dart' show ApiFailure;
-import '../../../../finance/Payment/domain/entity/Payment_entity.dart';
 import '../datasource/finance_remote.dart';
 import 'finance_repository.dart';
 

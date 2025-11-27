@@ -1,5 +1,5 @@
 import 'package:nilz_app/core/widget/list/entity_adapter.dart';
-import '../../../../../finance/payment/domain/entity/Payment_entity.dart';
+import 'package:nilz_app/feature/drawer/finance/payment/domain/entity/payment_entity.dart';
 
 class PaymentEntityAdapter extends EntityAdapter<PaymentEntity> {
   @override

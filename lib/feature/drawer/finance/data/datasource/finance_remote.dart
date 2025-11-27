@@ -3,7 +3,7 @@ import 'package:nilz_app/core/api/api_error/api_exception.dart';
 import 'package:nilz_app/core/api/api_error/api_status_code.dart';
 import 'package:nilz_app/core/api/api_links.dart';
 import 'package:nilz_app/core/api/api_methods.dart';
-import '../../../../finance/Payment/domain/entity/Payment_entity.dart';
+import 'package:nilz_app/feature/drawer/finance/payment/domain/entity/payment_entity.dart' show PaymentApiResponseEntity, paymentApiResponseEntityFromJson;
 import '../../gift/domain/entity/gift_entity.dart';
 
 abstract class FinanceRemote {
