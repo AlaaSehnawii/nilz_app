@@ -41,41 +41,36 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      // 👇 IMPORTANT: only protect the top; don't add bottom padding
-      top: true,
-      bottom: false,
-      child: Row(
-        children: [
-          // LEFT SIDE VERTICAL TABS
-          Container(
-            width: 30,
-            decoration: BoxDecoration(
-              color: AppColorManager.white,
-              border: Border(
-                right: BorderSide(
-                  color: AppColorManager.backgroundGrey.withOpacity(0.3),
-                  width: 5,
-                ),
-              ),
-            ),
-            child: Column(
-              children: List.generate(
-                _tabTitles.length,
-                (index) => _buildNavItem(index),
+    return Row(
+      children: [
+        // LEFT VERTICAL TABS
+        Container(
+          width: 30,
+          decoration: BoxDecoration(
+            color: AppColorManager.white,
+            border: Border(
+              right: BorderSide(
+                color: AppColorManager.backgroundGrey.withOpacity(0.3),
+                width: 5,
               ),
             ),
           ),
+          child: Column(
+            children: List.generate(
+              _tabTitles.length,
+              (index) => _buildNavItem(index),
+            ),
+          ),
+        ),
 
-          // RIGHT SIDE CONTENT
-          Expanded(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: _getCurrentWidget(),
-            ),
+        // RIGHT SIDE CONTENT
+        Expanded(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: _getCurrentWidget(),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

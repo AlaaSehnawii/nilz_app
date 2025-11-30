@@ -23,8 +23,8 @@ class _InquiryScreenState extends State<InquiryScreen> {
 
   List<RoomInfo> _rooms = [];
 
-  List<dynamic> _units = [];
-  bool _isLoadingUnits = false;
+  final List<dynamic> _units = [];
+  final bool _isLoadingUnits = false;
   String? _unitsError;
 
   @override
@@ -147,8 +147,6 @@ class _InquiryScreenState extends State<InquiryScreen> {
             },
           ),
 
-          const SizedBox(height: 12),
-
           // Padding(
           //   padding: const EdgeInsets.symmetric(horizontal: 15),
           //   child: SizedBox(
@@ -162,7 +160,6 @@ class _InquiryScreenState extends State<InquiryScreen> {
 
           const SizedBox(height: 12),
 
-          // 🔹 Now show the results below
           Expanded(
             child: _buildUnitsSection(),
           ),

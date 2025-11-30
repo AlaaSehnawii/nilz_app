@@ -40,7 +40,7 @@ class InquiryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        /// City dropdown
+        // City dropdown
         Padding(
           padding: const EdgeInsets.all(15),
           child: SearchableDropdown<dynamic>(
@@ -68,7 +68,7 @@ class InquiryWidget extends StatelessWidget {
           ),
         ),
 
-        /// Date pickers row
+        // Date pickers row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
@@ -96,7 +96,7 @@ class InquiryWidget extends StatelessWidget {
 
         const SizedBox(height: 12),
 
-        /// Room settings
+        // Room settings
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(

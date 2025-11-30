@@ -19,7 +19,7 @@ class AuthRemoteImpl extends AuthRemote {
   Future<LoginApiResponseEntity> login({
     required LoginRequestEntity entity,
   }) async {
-    final response = await ApiMethods().postNoHeaders(
+    final response = await ApiMethods().post(
       url: ApiPostUrl.login,
       body: entity.toJson(),
     );
@@ -41,7 +41,7 @@ class AuthRemoteImpl extends AuthRemote {
   Future<void> logout() async {
     AppSharedPreferences.getToken();
 
-    final response = await ApiMethods().postNoHeaders(
+    final response = await ApiMethods().post(
       url: ApiPostUrl.logout,
       body: {},
     );

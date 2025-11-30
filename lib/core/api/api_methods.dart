@@ -81,23 +81,6 @@ class ApiMethods {
     return res;
   }
 
-  Future<http.Response> postNoHeaders({
-    required String url,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? query,
-  }) async {
-    if (query != null) query = filterRequest(query);
-    if (body != null) body = filterRequest(body);
-
-    final Map<String, String> noHeaders = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-
-    final uri = _buildUri(url: url, query: query);
-    return http.post(uri, body: jsonEncode(body), headers: noHeaders);
-  }
-
   Future<http.Response> post({
     required String url,
     Map<String, dynamic>? body,

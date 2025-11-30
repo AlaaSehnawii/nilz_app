@@ -8,6 +8,7 @@ import 'package:nilz_app/feature/drawer/basic_data/city/presentation/cubit/city_
 import 'package:nilz_app/feature/drawer/basic_data/data/repository/basic_data_repository.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/create_reservation_screen.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/inquiry_screen.dart';
+
 import '../../../../core/injection/injection_container.dart' as di;
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/widget/bar/search_bar.dart';
@@ -27,127 +28,121 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColorManager.background,
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ButtonContainer(
-                      text: 'add_reservation'.tr(),
-                      fontSize: 15,
-                      height: 48,
-                      color: AppColorManager.denim,
-                      textColor: AppColorManager.background,
-                      fontWeight: FontWeight.w600,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => MultiRepositoryProvider(
-                              providers: [
-                                RepositoryProvider(
-                                  create: (_) => di.sl<BasicDataRepository>(),
-                                ),
-                              ],
-                              child: MultiBlocProvider(
-                                providers: [
-                                  BlocProvider(
-                                    create: (_) => di.sl<ReservationCubit>(),
-                                  ),
-                                  BlocProvider(
-                                    create: (_) => di.sl<CityCubit>(),
-                                  ),
-                                ],
-                                child: const CreateReservationScreen(),
-                              ),
+    return Column(
+      children: [
+        // TOP BUTTONS
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: ButtonContainer(
+                  text: 'add_reservation'.tr(),
+                  fontSize: 15,
+                  height: 48,
+                  color: AppColorManager.denim,
+                  textColor: AppColorManager.background,
+                  fontWeight: FontWeight.w600,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MultiRepositoryProvider(
+                          providers: [
+                            RepositoryProvider(
+                              create: (_) => di.sl<BasicDataRepository>(),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ButtonContainer(
-                      text: 'inquiry'.tr(),
-                      fontSize: 15,
-                      height: 48,
-                      textColor: AppColorManager.denim,
-                      fontWeight: FontWeight.w600,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => MultiRepositoryProvider(
-                              providers: [
-                                RepositoryProvider(
-                                  create: (_) => di.sl<BasicDataRepository>(),
-                                ),
-                              ],
-                              child: MultiBlocProvider(
-                                providers: [
-                                  BlocProvider(
-                                    create: (_) => di.sl<ReservationCubit>(),
-                                  ),
-                                  BlocProvider(
-                                    create: (_) => di.sl<CityCubit>(),
-                                  ),
-                                ],
-                                child: const InquiryScreen(),
+                          ],
+                          child: MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) => di.sl<ReservationCubit>(),
                               ),
-                            ),
+                              BlocProvider(
+                                create: (_) => di.sl<CityCubit>(),
+                              ),
+                            ],
+                            child: const CreateReservationScreen(),
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // SEARCH BAR
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: CustomSearchBar(
-                controller: _searchCtrl,
-                onChanged: (v) => setState(() => _query = v.trim()),
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
-                      blurRadius: 8,
-                      offset: const Offset(0, -2),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: BlocProvider.value(
-                    value: context.read<ReservationCubit>(),
-                    child: const ReservationList(),
-                  ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
-          ],
+              const SizedBox(width: 10),
+              Expanded(
+                child: ButtonContainer(
+                  text: 'inquiry'.tr(),
+                  fontSize: 15,
+                  height: 48,
+                  textColor: AppColorManager.denim,
+                  fontWeight: FontWeight.w600,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MultiRepositoryProvider(
+                          providers: [
+                            RepositoryProvider(
+                              create: (_) => di.sl<BasicDataRepository>(),
+                            ),
+                          ],
+                          child: MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create: (_) => di.sl<ReservationCubit>(),
+                              ),
+                              BlocProvider(
+                                create: (_) => di.sl<CityCubit>(),
+                              ),
+                            ],
+                            child: const InquiryScreen(),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+
+        // SEARCH BAR
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: CustomSearchBar(
+            controller: _searchCtrl,
+            onChanged: (v) => setState(() => _query = v.trim()),
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // LIST AREA
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(24),
+                topRight: Radius.circular(24),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.03),
+                  blurRadius: 8,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 8),
+              child: ReservationList(), // ReservationCubit is provided in NavBar
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

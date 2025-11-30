@@ -82,5 +82,9 @@
   "no_results_found": "No Results Found!",
   "add_bed_type": "Add Bed Type",
   "edit_bed_type": "Edit Bed Type",
-  "delete_bed_type": "Delete Bed Type"
+  "delete_bed_type": "Delete Bed Type",
+
+  "room_settings": "Room Settings",
+  "adults": "Adults",
+  "children": "Children"
 }

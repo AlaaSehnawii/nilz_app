@@ -1,7 +1,7 @@
 class ApiGetUrl {
   static String getResStatistics = "api/statistics/reservation";
   static String getPendingRequests =
-      "api/statistics/pendingReservations?skip=0&limit=1&sortKey=createdAt&sortOrder=-1";
+      "api/statistics/pendingReservations";
   static String getReservation = "api/reservation";
   static String getPost = "api/post";
   static String getCity = "api/city";

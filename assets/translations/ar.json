@@ -81,8 +81,11 @@
      "no_results_found": "لا يوجد نتائج",
      "add_bed_type": "إضافة نوع تخت",
      "edit_bed_type": "تعديل نوع تخت",
-     "delete_bed_type": "حذف نوع تخت"
+     "delete_bed_type": "حذف نوع تخت",
 
+     "room_settings": "إعدادات الغرفة",
+     "adults": "بالغين",
+     "children": "أطفال"
 
 
 }

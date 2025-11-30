@@ -45,30 +45,33 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 320,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColorManager.background,
-        boxShadow: [
-          BoxShadow(
-            color: AppColorManager.textAppColor.withOpacity(0.15),
-            blurRadius: 20,
-            offset: const Offset(10, 0),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 100,
-            width: 100,
-            child: SvgPicture.asset(AppIconManager.nilz),
-          ),
-          const Divider(height: 20, color: AppColorManager.grey),
-          Expanded(child: _buildMenuItems()),
-          _buildBottomItem(),
-        ],
+    return MultiBlocProvider(
+      providers: [BlocProvider<LoginCubit>(create: (_) => di.sl<LoginCubit>()),],
+      child: Container(
+        width: 320,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColorManager.background,
+          boxShadow: [
+            BoxShadow(
+              color: AppColorManager.textAppColor.withOpacity(0.15),
+              blurRadius: 20,
+              offset: const Offset(10, 0),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: SvgPicture.asset(AppIconManager.nilz),
+            ),
+            const Divider(height: 20, color: AppColorManager.grey),
+            Expanded(child: _buildMenuItems()),
+            _buildBottomItem(),
+          ],
+        ),
       ),
     );
   }
@@ -167,14 +170,10 @@ class _MyDrawerState extends State<MyDrawer> {
         title: "menus".tr(),
         isLogout: false,
         children: [
-          SubItem(title: "Reservation_type".tr(), onTap: () => debugPrint("A")),
-          SubItem(title: "city".tr(), onTap: () => debugPrint("B")),
-          SubItem(title: "bed_type".tr(), onTap: () => debugPrint("C")),
-          SubItem(title: "post_category".tr(), onTap: () => debugPrint("C")),
-          SubItem(title: "room_type".tr(), onTap: () => debugPrint("C")),
-          SubItem(title: "service".tr(), onTap: () => debugPrint("C")),
-          SubItem(title: "place_type".tr(), onTap: () => debugPrint("C")),
-          SubItem(title: "reservation_type".tr(), onTap: () => debugPrint("C")),
+          SubItem(title: "places".tr(), onTap: () => debugPrint("A")),
+          SubItem(title: "dynamic_fields_section".tr(), onTap: () => debugPrint("B")),
+          SubItem(title: "contract".tr(), onTap: () => debugPrint("C")),
+          SubItem(title: "customers".tr(), onTap: () => debugPrint("C")),
         ],
       ),
       _MenuItem(
