@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
 import 'package:nilz_app/feature/drawer/basic_data/data/repository/basic_data_repository.dart';
+import 'package:nilz_app/feature/reservation/domain/entity/response/unit_entity.dart';
 import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
 import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/inquiry_widget.dart';
+import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
+import 'package:nilz_app/feature/reservation/presentation/cubit/unit_state.dart';
+import 'package:nilz_app/core/resource/cubit_status_manager.dart';
 
 class InquiryScreen extends StatefulWidget {
   const InquiryScreen({super.key});
@@ -14,6 +18,7 @@ class InquiryScreen extends StatefulWidget {
 }
 
 class _InquiryScreenState extends State<InquiryScreen> {
+  bool isInquiry = true;
 
   List<dynamic> _cities = [];
   dynamic _selectedCity;
@@ -23,72 +28,11 @@ class _InquiryScreenState extends State<InquiryScreen> {
 
   List<RoomInfo> _rooms = [];
 
-  final List<dynamic> _units = [];
-  final bool _isLoadingUnits = false;
-  String? _unitsError;
-
   @override
   void initState() {
     super.initState();
     _loadCities();
   }
-
-  //   Future<void> _searchUnits() async {
-  //   if (_selectedCity == null || _fromDate == null || _toDate == null) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('please_fill_filters'.tr())),
-  //     );
-  //     return;
-  //   }
-
-  //   setState(() {
-  //     _isLoadingUnits = true;
-  //     _unitsError = null;
-  //   });
-
-  //   try {
-  //     // TODO: replace with your repository that calls /unit/children
-
-  //     final repository = context.read<BasicDataRepository>();
-
-  //     // Example: if you create a method like "getAvailableUnits"
-  //     // with body similar to what you showed:
-  //     final result = await repository.getAvailableUnits(
-  //       cityId: _selectedCity.id,   // adjust according to your city model
-  //       fromDate: _fromDate!,
-  //       toDate: _toDate!,
-  //       rooms: _rooms,              // or roomConfig mapping
-  //     );
-
-  //     if (!mounted) return;
-
-  //     result.fold(
-  //       (failure) {
-  //         setState(() {
-  //           _isLoadingUnits = false;
-  //           _unitsError = failure.message ?? 'something_went_wrong'.tr();
-  //           _units = [];
-  //         });
-  //       },
-  //       (success) {
-  //         // success should be something like UnitsApiResponseEntity
-  //         // with a "results" list. For now, assume:
-  //         // success.data.results => List<dynamic>
-  //         setState(() {
-  //           _isLoadingUnits = false;
-  //           _units = success.data.results; // adjust to your entity
-  //         });
-  //       },
-  //     );
-  //   } catch (e) {
-  //     if (!mounted) return;
-  //     setState(() {
-  //       _isLoadingUnits = false;
-  //       _unitsError = e.toString();
-  //     });
-  //   }
-  // }
-
 
   Future<void> _loadCities() async {
     final repository = context.read<BasicDataRepository>();
@@ -104,9 +48,46 @@ class _InquiryScreenState extends State<InquiryScreen> {
     });
   }
 
+  /// helper to build a minimal roomConfig for the body
+  List<Map<String, dynamic>> _buildRoomConfig() {
+    // TODO: map _rooms properly when your RoomInfo is ready
+    return [
+      {
+        "guests": [
+          {"age": -1, "count": 1},
+        ],
+      },
+    ];
+  }
+
+  String _toIsoDayAtNine(DateTime date) {
+    final d = DateTime(date.year, date.month, date.day, 9);
+    return d.toUtc().toIso8601String();
+  }
+
+  Future<void> _searchUnits() async {
+    if (_selectedCity == null || _fromDate == null || _toDate == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('please_fill_filters'.tr())));
+      return;
+    }
+
+    final cubit = context.read<UnitCubit>();
+
+    await cubit.getUnitChildren(
+      context,
+      cityId: _selectedCity.id,
+      toStartTimeIso: _toIsoDayAtNine(_fromDate!),
+      toEndTimeIso: _toIsoDayAtNine(_toDate!),
+      roomConfig: _buildRoomConfig(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isArabic = context.locale.languageCode == 'ar';
+
     return Scaffold(
       appBar: MainAppBar(
         title: 'inquiry'.tr(),
@@ -116,6 +97,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
       body: Column(
         children: [
           InquiryWidget(
+            isInquiry: isInquiry,
             cities: _cities,
             selectedCity: _selectedCity,
             isArabic: isArabic,
@@ -145,63 +127,57 @@ class _InquiryScreenState extends State<InquiryScreen> {
                 _rooms = rooms;
               });
             },
+            onSearch: _searchUnits,
           ),
-
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 15),
-          //   child: SizedBox(
-          //     width: double.infinity,
-          //     child: ElevatedButton(
-          //       onPressed: _isLoadingUnits ? null : _searchUnits,
-          //       child: Text('search'.tr()),
-          //     ),
-          //   ),
-          // ),
 
           const SizedBox(height: 12),
 
           Expanded(
-            child: _buildUnitsSection(),
+            child: BlocBuilder<UnitCubit, UnitState>(
+              builder: (context, state) {
+                return _buildUnitsSection(state);
+              },
+            ),
           ),
         ],
       ),
     );
   }
 
-    Widget _buildUnitsSection() {
-    if (_isLoadingUnits) {
+  Widget _buildUnitsSection(UnitState state) {
+    if (state.status == CubitStatus.loading) {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (_unitsError != null) {
+    if (state.status == CubitStatus.error) {
       return Center(
-        child: Text(
-          _unitsError!,
-          style: const TextStyle(color: Colors.red),
-        ),
+        child: Text(state.error, style: const TextStyle(color: Colors.red)),
       );
     }
 
-    if (_units.isEmpty) {
-      return Center(
-        child: Text('no_units_found'.tr()),
-      );
+    if (state.entity.isEmpty) {
+      return Center(child: Text('no_units_found'.tr()));
     }
+
+    final bool isArabic = context.locale.languageCode == 'ar';
+    final List<UnitEntity> units = state.entity;
 
     return ListView.builder(
-      itemCount: _units.length,
+      itemCount: units.length,
       itemBuilder: (context, index) {
-        final unit = _units[index];
+        final unit = units[index];
 
-        // Assuming "unit" is a Map<String, dynamic> from your response
-        // with structure like your JSON:
-        final parent = unit['parent'];
-        final unitName = unit['name']?['en'] ?? unit['name']?['ar'] ?? '';
-        final parentName =
-            parent?['name']?['en'] ?? parent?['name']?['ar'] ?? '';
-        final price = unit['price']?.toString() ?? '';
-        final address = unit['address']?.toString() ?? '';
-        final coverUrl = unit['coverImage']?['url'];
+        final unitName = isArabic
+            ? (unit.name?.ar ?? unit.name?.en ?? '')
+            : (unit.name?.en ?? unit.name?.ar ?? '');
+
+        final cityName = isArabic
+            ? (unit.city?.name?.ar ?? unit.city?.name?.en ?? '')
+            : (unit.city?.name?.en ?? unit.city?.name?.ar ?? '');
+
+        final price = unit.price ?? '';
+        final address = unit.address ?? '';
+        final coverUrl = unit.coverImage?.url;
 
         return Card(
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
@@ -221,8 +197,8 @@ class _InquiryScreenState extends State<InquiryScreen> {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (parentName.isNotEmpty)
-                  Text(parentName, style: const TextStyle(fontSize: 12)),
+                if (cityName.isNotEmpty)
+                  Text(cityName, style: const TextStyle(fontSize: 12)),
                 if (address.isNotEmpty)
                   Text(address, style: const TextStyle(fontSize: 12)),
                 if (price.isNotEmpty)
@@ -236,12 +212,11 @@ class _InquiryScreenState extends State<InquiryScreen> {
               ],
             ),
             onTap: () {
-              // TODO: navigate to unit details if you have a screen for it
+              // TODO: navigate to unit details if you have a screen
             },
           ),
         );
       },
     );
   }
-
 }

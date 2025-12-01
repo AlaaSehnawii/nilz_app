@@ -14,6 +14,7 @@ import 'package:nilz_app/feature/drawer/drawer.dart';
 import 'package:nilz_app/feature/posts/presentation/cubit/post_cubit.dart';
 import 'package:nilz_app/feature/posts/presentation/ui/screen/post_list_screen.dart';
 import 'package:nilz_app/feature/reservation/presentation/cubit/reservation_cubit.dart';
+import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/reservation_list_screen.dart';
 
 import '../../../core/resource/color_manager.dart';
@@ -41,17 +42,27 @@ class _NavBarState extends State<NavBar> {
   ];
 
   late final List<Widget> _pages = [
-    BlocProvider(create: (_) => di.sl<PostCubit>(), child: const PostListScreen()),
-    BlocProvider(create: (_) => di.sl<ResStatisticsCubit>(), child: const MainScreen()),
-    BlocProvider(create: (_) => di.sl<ReservationCubit>(), child: const ReservationListScreen()),
+    BlocProvider(
+      create: (_) => di.sl<PostCubit>(),
+      child: const PostListScreen(),
+    ),
+    BlocProvider(
+      create: (_) => di.sl<ResStatisticsCubit>(),
+      child: const MainScreen(),
+    ),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => di.sl<ReservationCubit>()),
+        BlocProvider(create: (_) => di.sl<UnitCubit>()),
+      ],
+      child: const ReservationListScreen(),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<LoginCubit>(create: (_) => di.sl<LoginCubit>()),
-      ],
+      providers: [BlocProvider<LoginCubit>(create: (_) => di.sl<LoginCubit>())],
       child: WillPopScope(
         onWillPop: () async {
           final result = await showConfirmDialog(
@@ -61,10 +72,10 @@ class _NavBarState extends State<NavBar> {
             confirmText: "Yes",
             cancelText: "No",
             confirmColor: AppColorManager.denim,
-            cancelColor: AppColorManager.red,
+            cancelColor: AppColorManager.black,
             barrierDismissible: false,
           );
-      
+
           if (result) {
             if (Platform.isAndroid) {
               SystemNavigator.pop();
@@ -77,7 +88,7 @@ class _NavBarState extends State<NavBar> {
         child: Scaffold(
           key: _scaffoldKey,
           drawer: const MyDrawer(),
-      
+
           appBar: MainAppBar(
             title: _titles[page],
             showArrowBack: false,
@@ -87,12 +98,13 @@ class _NavBarState extends State<NavBar> {
               child: SvgPicture.asset(AppIconManager.menu),
             ),
           ),
-      
+
           body: _pages[page],
-      
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           floatingActionButton: _buildCenterFab(),
-      
+
           bottomNavigationBar: _buildBottomBar(),
         ),
       ),

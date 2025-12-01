@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:nilz_app/core/api/connector.dart';
+import 'package:nilz_app/feature/reservation/domain/entity/response/unit_entity.dart';
 import '../../../../../core/api/api_error/api_failures.dart' show ApiFailure;
 import '../../domain/entity/response/reservation_entity.dart';
 import '../../domain/repository/reservation_repository.dart';
@@ -46,6 +47,26 @@ class ReservationRepositoryImpl implements ReservationRepository {
           roomNum: roomNum,
           userId: userId,
           withBreakfast: withBreakfast,
+        );
+        return Right(result);
+      },
+    );
+  }
+
+  @override
+  Future<Either<ApiFailure, UnitApiResponseEntity>> getUnitChildren({
+    required String cityId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+    required List<Map<String, dynamic>> roomConfig,
+  }) {
+    return Connector<UnitApiResponseEntity>().connect(
+      remote: () async {
+        final result = await remote.getUnitChildren(
+          cityId: cityId,
+          toStartTimeIso: toStartTimeIso,
+          toEndTimeIso: toEndTimeIso,
+          roomConfig: roomConfig,
         );
         return Right(result);
       },

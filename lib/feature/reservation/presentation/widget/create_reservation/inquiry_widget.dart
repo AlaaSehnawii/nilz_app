@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:nilz_app/core/widget/button/main_app_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/widget/date_picker/date_picker_field.dart';
@@ -10,6 +11,7 @@ import 'package:nilz_app/feature/reservation/presentation/widget/create_reservat
 class InquiryWidget extends StatelessWidget {
   const InquiryWidget({
     super.key,
+    required this.isInquiry,
     required this.cities,
     required this.selectedCity,
     required this.isArabic,
@@ -20,8 +22,10 @@ class InquiryWidget extends StatelessWidget {
     required this.onFromDateChanged,
     required this.onToDateChanged,
     required this.onRoomsChanged,
+    required this.onSearch,
   });
 
+  final bool isInquiry;
   final List<dynamic> cities;
   final dynamic selectedCity;
   final bool isArabic;
@@ -35,6 +39,7 @@ class InquiryWidget extends StatelessWidget {
   final ValueChanged<DateTime?> onFromDateChanged;
   final ValueChanged<DateTime?> onToDateChanged;
   final ValueChanged<List<RoomInfo>> onRoomsChanged;
+  final VoidCallback onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +116,20 @@ class InquiryWidget extends StatelessWidget {
             ],
           ),
         ),
+
+        if (isInquiry) ...[
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: SizedBox(
+              width: double.infinity,
+              child: MainAppButton(
+                onTap: onSearch,
+                child: Text('search'.tr()),
+              ),
+            ),
+          ),
+        ],
 
         const SizedBox(height: 6),
         const Divider(color: AppColorManager.textGrey),

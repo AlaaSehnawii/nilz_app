@@ -3,6 +3,7 @@ import 'package:nilz_app/core/api/api_error/api_exception.dart';
 import 'package:nilz_app/core/api/api_error/api_status_code.dart';
 import 'package:nilz_app/core/api/api_links.dart';
 import 'package:nilz_app/core/api/api_methods.dart';
+import 'package:nilz_app/feature/reservation/domain/entity/response/unit_entity.dart';
 import '../../domain/entity/response/reservation_entity.dart';
 
 abstract class ReservationRemote {
@@ -20,6 +21,15 @@ abstract class ReservationRemote {
     String? couponCode,
     required String userId,
     required bool withBreakfast,
+  });
+
+  ///////////////// Unit /////////////////
+  
+  Future<UnitApiResponseEntity> getUnitChildren({
+    required String cityId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+    required List<Map<String, dynamic>> roomConfig,
   });
 }
 
@@ -97,4 +107,45 @@ class ReservationRemoteImpl extends ReservationRemote {
     if (res.statusCode >= 200 && res.statusCode < 300) return true;
     throw ApiServerException(response: res);
   }
+
+
+  ///////////////// Unit /////////////////
+  
+   @override
+  Future<UnitApiResponseEntity> getUnitChildren({
+    required String cityId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+    required List<Map<String, dynamic>> roomConfig,
+  }) async {
+    final body = <String, dynamic>{
+      "toEndTime": toEndTimeIso,
+      "toStartTime": toStartTimeIso,
+      "city": cityId,
+      "roomConfig": roomConfig,
+    };
+
+    // Query params: ?skip=0&limit=10000000000&withCount=true
+    final response = await ApiMethods().post(
+      url: ApiPostUrl.getUnitChildren,
+      query: <String, dynamic>{
+        "skip": 0,
+        "limit": 10000000000,
+        "withCount": true,
+      },
+      body: body,
+    );
+
+    debugPrint("getUnitChildren");
+    debugPrint("${response.statusCode}");
+    debugPrint(response.body);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      return unitApiResponseEntityFromJson(response.body);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  
 }

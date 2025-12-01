@@ -19,7 +19,9 @@ import 'package:nilz_app/feature/posts/domain/repository/post_repository.dart';
 import 'package:nilz_app/feature/posts/domain/usecase/create_post_usecase.dart';
 import 'package:nilz_app/feature/posts/domain/usecase/post_usecase.dart';
 import 'package:nilz_app/feature/posts/presentation/cubit/post_cubit.dart';
+import 'package:nilz_app/feature/reservation/domain/usecase/unit_usecase.dart';
 import 'package:nilz_app/feature/reservation/domain/usecase/create_reservation_usecase.dart';
+import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
 import '../../feature/auth/login/data/datasource/remote/auth_remote.dart';
 import '../../feature/auth/login/data/repository/auth_repository_impl.dart';
 import '../../feature/auth/login/domain/repository/auth_repository.dart';
@@ -28,7 +30,7 @@ import '../../feature/auth/login/domain/usecase/logout_usecase.dart';
 import '../../feature/auth/login/presentation/cubit/login_cubit/login_cubit.dart';
 import '../../feature/drawer/basic_data/reservation_type/domain/usecase/add_reservation_type_usecase.dart';
 import '../../feature/drawer/basic_data/reservation_type/domain/usecase/delete_reservation_type_usecase.dart';
-import '../../feature/drawer/basic_data/reservation_type/domain/usecase/edit_Reservation_type_usecase.dart';
+import '../../feature/drawer/basic_data/reservation_type/domain/usecase/edit_reservation_type_usecase.dart';
 import '../../feature/drawer/basic_data/reservation_type/domain/usecase/reservation_usecase.dart';
 import '../../feature/drawer/basic_data/reservation_type/presentation/cubit/reservation_type_cubit.dart';
 import '../../feature/drawer/basic_data/service/domain/usecase/add_service_usecase.dart';
@@ -146,9 +148,7 @@ Future<void> initDI() async {
   sl.registerLazySingleton<PostRepository>(
     () => PostRepositoryImpl(remote: sl()),
   );
-  sl.registerLazySingleton<PostUseCase>(
-    () => PostUseCase(repository: sl()),
-  );
+  sl.registerLazySingleton<PostUseCase>(() => PostUseCase(repository: sl()));
   sl.registerLazySingleton<CreatePostUseCase>(
     () => CreatePostUseCase(repository: sl()),
   );
@@ -156,7 +156,10 @@ Future<void> initDI() async {
     () => PostCubit(useCase: sl(), createPostUseCase: sl()),
   );
 
+  ///////////
   // ///////////////////////// Basic Data ////////////////////////////////
+  //////////
+
   sl.registerLazySingleton<BasicDataRemote>(() => BasicDataRemoteImpl());
   sl.registerLazySingleton<BasicDataRepository>(
     () => BasicDataRepositoryImpl(remote: sl()),

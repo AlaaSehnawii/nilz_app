@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
-import 'package:nilz_app/core/widget/form_field/text_form_field.dart';
+
 import 'package:nilz_app/core/resource/color_manager.dart';
+import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
+import 'package:nilz_app/core/widget/form_field/text_form_field/text_form_field.dart';
 import 'package:nilz_app/feature/drawer/basic_data/data/repository/basic_data_repository.dart';
 import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
 import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/inquiry_widget.dart';
@@ -58,7 +59,10 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
       ),
       body: Column(
         children: [
+          /// Reuse the same header widget as Inquiry,
+          /// but hide the search button (isInquiry: false).
           InquiryWidget(
+            isInquiry: false,
             cities: _cities,
             selectedCity: _selectedCity,
             isArabic: isArabic,
@@ -88,8 +92,10 @@ class _CreateReservationScreenState extends State<CreateReservationScreen> {
                 _rooms = rooms;
               });
             },
+            onSearch: () {}, // required param, but unused when isInquiry == false
           ),
 
+          // Rest of the reservation form
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(15),

@@ -3,7 +3,6 @@ import 'package:nilz_app/core/api/api_error/api_exception.dart';
 import 'package:nilz_app/core/api/api_error/api_status_code.dart';
 import 'package:nilz_app/core/api/api_links.dart';
 import 'package:nilz_app/core/api/api_methods.dart';
-
 import '../../domain/entity/response/post_entity.dart';
 
 abstract class PostRemote {
@@ -90,10 +89,7 @@ class PostRemoteImpl extends PostRemote {
       withBreakfast: withBreakfast,
     );
 
-    final res = await ApiMethods().post(
-      url: ApiPostUrl.addPost ,
-      body: body,
-    );
+    final res = await ApiMethods().post(url: ApiPostUrl.addPost, body: body);
 
     if (res.statusCode >= 200 && res.statusCode < 300) return true;
     throw ApiServerException(response: res);

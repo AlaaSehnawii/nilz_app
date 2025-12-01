@@ -6,9 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilz_app/core/widget/button/button_container.dart';
 import 'package:nilz_app/feature/drawer/basic_data/city/presentation/cubit/city_cubit.dart';
 import 'package:nilz_app/feature/drawer/basic_data/data/repository/basic_data_repository.dart';
+import 'package:nilz_app/feature/reservation/domain/repository/reservation_repository.dart';
+import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/create_reservation_screen.dart';
 import 'package:nilz_app/feature/reservation/presentation/screen/inquiry_screen.dart';
-
 import '../../../../core/injection/injection_container.dart' as di;
 import '../../../../core/resource/color_manager.dart';
 import '../../../../core/widget/bar/search_bar.dart';
@@ -52,6 +53,9 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
                             RepositoryProvider(
                               create: (_) => di.sl<BasicDataRepository>(),
                             ),
+                            RepositoryProvider(
+                              create: (_) => di.sl<ReservationRepository>(),
+                            ),
                           ],
                           child: MultiBlocProvider(
                             providers: [
@@ -87,6 +91,9 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
                             RepositoryProvider(
                               create: (_) => di.sl<BasicDataRepository>(),
                             ),
+                            RepositoryProvider(
+                              create: (_) => di.sl<ReservationRepository>(),
+                            ),
                           ],
                           child: MultiBlocProvider(
                             providers: [
@@ -95,6 +102,9 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
                               ),
                               BlocProvider(
                                 create: (_) => di.sl<CityCubit>(),
+                              ),
+                              BlocProvider(
+                                create: (_) => di.sl<UnitCubit>(),
                               ),
                             ],
                             child: const InquiryScreen(),
