@@ -135,6 +135,7 @@ Future<void> initDI() async {
   sl.registerLazySingleton<CreateReservationUseCase>(
     () => CreateReservationUseCase(repository: sl()),
   );
+  sl.registerLazySingleton<UnitUseCase>(() => UnitUseCase(repository: sl()));
   sl.registerFactory<ReservationCubit>(
     () => ReservationCubit(useCase: sl(), createReservationUseCase: sl()),
   );
