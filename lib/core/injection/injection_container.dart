@@ -139,6 +139,7 @@ Future<void> initDI() async {
   sl.registerFactory<ReservationCubit>(
     () => ReservationCubit(useCase: sl(), createReservationUseCase: sl()),
   );
+  sl.registerFactory<UnitCubit>(() => UnitCubit(unitUseCase: sl()));
 
   // ============ Post List ===========
   sl.registerLazySingleton<PostRemote>(() => PostRemoteImpl());
