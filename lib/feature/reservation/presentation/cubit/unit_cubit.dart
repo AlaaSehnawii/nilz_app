@@ -2,12 +2,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nilz_app/core/api/api_error/api_error.dart';
+import 'package:nilz_app/feature/reservation/domain/usecase/unit_list_usecase.dart';
 import 'package:nilz_app/feature/reservation/domain/usecase/unit_usecase.dart';
 import 'package:nilz_app/feature/reservation/presentation/cubit/unit_state.dart';
 import '../../../../../core/resource/cubit_status_manager.dart';
 
 class UnitCubit extends Cubit<UnitState> {
-  final UnitUseCase unitUseCase;
+  final UnitListUseCase unitUseCase;
 
   UnitCubit({
     required this.unitUseCase,

@@ -125,6 +125,7 @@ class ReservationRemoteImpl extends ReservationRemote {
       "roomConfig": roomConfig,
     };
 
+    // Query params: ?skip=0&limit=10000000000&withCount=true
     final response = await ApiMethods().post(
       url: ApiPostUrl.getUnitChildren,
       query: <String, dynamic>{
@@ -136,7 +137,6 @@ class ReservationRemoteImpl extends ReservationRemote {
     );
 
     debugPrint("getUnitChildren");
-    debugPrint(body.toString());
     debugPrint("${response.statusCode}");
     debugPrint(response.body);
 

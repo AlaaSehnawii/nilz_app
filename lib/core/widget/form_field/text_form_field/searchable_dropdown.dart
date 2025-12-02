@@ -109,18 +109,39 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>>
   }
 
   void _openOverlay() {
-    if (_isOpen) {
-      _rebuildOverlayIfOpen();
-      return;
-    }
-    _isOpen = true;
-    _overlayEntry = _buildOverlayEntry();
+  if (_isOpen) {
+    _rebuildOverlayIfOpen();
+    return;
+  }
+  _isOpen = true;
+  _overlayEntry = _buildOverlayEntry();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!mounted) return;
     final overlay = Overlay.of(context);
     if (_overlayEntry != null) {
       overlay.insert(_overlayEntry!);
     }
-    setState(() {});
-  }
+  });
+
+  setState(() {});
+}
+
+void _rebuildOverlayIfOpen() {
+  if (!_isOpen) return;
+
+  _overlayEntry?.remove();
+  _overlayEntry = _buildOverlayEntry();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!mounted) return;
+    final overlay = Overlay.of(context);
+    if (_overlayEntry != null) {
+      overlay.insert(_overlayEntry!);
+    }
+  });
+}
+
 
   void _closeOverlay() {
     if (!_isOpen) return;
@@ -130,15 +151,6 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>>
     setState(() {});
   }
 
-  void _rebuildOverlayIfOpen() {
-    if (!_isOpen) return;
-    _overlayEntry?.remove();
-    _overlayEntry = _buildOverlayEntry();
-    final overlay = Overlay.of(context);
-    if (_overlayEntry != null) {
-      overlay.insert(_overlayEntry!);
-    }
-  }
 
   OverlayEntry _buildOverlayEntry() {
     final RenderBox? renderBox =

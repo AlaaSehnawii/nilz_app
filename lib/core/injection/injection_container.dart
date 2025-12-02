@@ -19,6 +19,7 @@ import 'package:nilz_app/feature/posts/domain/repository/post_repository.dart';
 import 'package:nilz_app/feature/posts/domain/usecase/create_post_usecase.dart';
 import 'package:nilz_app/feature/posts/domain/usecase/post_usecase.dart';
 import 'package:nilz_app/feature/posts/presentation/cubit/post_cubit.dart';
+import 'package:nilz_app/feature/reservation/domain/usecase/unit_list_usecase.dart';
 import 'package:nilz_app/feature/reservation/domain/usecase/unit_usecase.dart';
 import 'package:nilz_app/feature/reservation/domain/usecase/create_reservation_usecase.dart';
 import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
@@ -137,7 +138,7 @@ Future<void> initDI() async {
   sl.registerLazySingleton<CreateReservationUseCase>(
     () => CreateReservationUseCase(repository: sl()),
   );
-  sl.registerLazySingleton<UnitUseCase>(() => UnitUseCase(repository: sl()));
+  sl.registerLazySingleton<UnitListUseCase>(() => UnitListUseCase(repository: sl()));
   sl.registerFactory<ReservationCubit>(
     () => ReservationCubit(useCase: sl(), createReservationUseCase: sl()),
   );

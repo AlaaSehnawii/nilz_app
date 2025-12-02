@@ -25,7 +25,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? showSuffixIcon;
 
   @override
-  Size get preferredSize => Size.fromHeight(AppHeightManager.h9);
+  Size get preferredSize => Size.fromHeight(AppHeightManager.h6);
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +74,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               onItemSelected: (item) {
-                // TODO: handle navigation based on item
-                // e.g. if (item == AppBarMenuItem.profile) { ... }
               },
             ),
           ),

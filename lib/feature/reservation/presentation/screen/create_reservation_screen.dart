@@ -6,7 +6,7 @@ import 'package:nilz_app/core/widget/bar/title_app_bar.dart';
 import 'package:nilz_app/feature/drawer/basic_data/data/repository/basic_data_repository.dart';
 import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
 import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/create_reservation_card.dart';
-import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/inquiry_widget.dart';
+import 'package:nilz_app/feature/reservation/presentation/widget/inquiry/inquiry_widget.dart';
 
 class CreateReservationScreen extends StatefulWidget {
   const CreateReservationScreen({super.key});
