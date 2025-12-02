@@ -7,7 +7,8 @@ import 'package:nilz_app/core/resource/icon_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CounterRow extends StatelessWidget {
-  const CounterRow({super.key, 
+  const CounterRow({
+    super.key,
     required this.label,
     required this.value,
     required this.onDecrement,
@@ -36,10 +37,7 @@ class CounterRow extends StatelessWidget {
             ),
             Text(
               value.toString(),
-              style: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
             ),
             IconButton(
               icon: SvgPicture.asset(

@@ -48,16 +48,21 @@ class _InquiryScreenState extends State<InquiryScreen> {
     });
   }
 
-  /// helper to build a minimal roomConfig for the body
   List<Map<String, dynamic>> _buildRoomConfig() {
-    // TODO: map _rooms properly when your RoomInfo is ready
-    return [
-      {
-        "guests": [
-          {"age": -1, "count": 1},
-        ],
-      },
-    ];
+    return _rooms.map((room) {
+      final List<Map<String, dynamic>> guests = [];
+
+      if (room.adults > 0) {
+        guests.add({"age": -1, "count": room.adults});
+      }
+
+      for (final age in room.childrenAges) {
+        if (age == null) continue;
+        guests.add({"age": age, "count": 1});
+      }
+
+      return {"guests": guests};
+    }).toList();
   }
 
   String _toIsoDayAtNine(DateTime date) {
@@ -212,7 +217,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
               ],
             ),
             onTap: () {
-              // TODO: navigate to unit details if you have a screen
+              // TODO: navigate to unit details screen
             },
           ),
         );

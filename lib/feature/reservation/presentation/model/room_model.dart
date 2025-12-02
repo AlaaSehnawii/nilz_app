@@ -1,19 +1,19 @@
 class RoomInfo {
   int adults;
   int children;
-  List<String> childrenNames;
+  List<int?> childrenAges;
 
   RoomInfo({
     required this.adults,
     required this.children,
-    List<String>? childrenNames,
-  }) : childrenNames = childrenNames ?? List<String>.generate(children, (_) => '');
+    List<int?>? childrenAges,
+  }) : childrenAges = childrenAges ?? [];
 
   RoomInfo copy() {
     return RoomInfo(
       adults: adults,
       children: children,
-      childrenNames: List<String>.from(childrenNames),
+      childrenAges: List<int?>.from(childrenAges),
     );
   }
 }

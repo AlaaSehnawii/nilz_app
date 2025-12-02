@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nilz_app/core/widget/button/main_app_button.dart';
 import 'package:nilz_app/core/widget/form_field/text_form_field.dart';
+import 'package:nilz_app/core/widget/form_field/text_form_field/searchable_dropdown.dart';
 import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart';
 import 'package:nilz_app/feature/reservation/presentation/widget/create_reservation/room_settings/counter_row.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -95,15 +96,15 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
               if (newValue < 0) return;
               setDialogState(() {
                 room.children = newValue;
-                if (room.childrenNames.length < newValue) {
-                  room.childrenNames.addAll(
-                    List<String>.generate(
-                      newValue - room.childrenNames.length,
-                      (_) => '',
+                if (room.childrenAges.length < newValue) {
+                  room.childrenAges.addAll(
+                    List<int?>.filled(
+                      newValue - room.childrenAges.length,
+                      null,
                     ),
                   );
-                } else if (room.childrenNames.length > newValue) {
-                  room.childrenNames = room.childrenNames.sublist(0, newValue);
+                } else if (room.childrenAges.length > newValue) {
+                  room.childrenAges = room.childrenAges.sublist(0, newValue);
                 }
               });
             }
@@ -133,7 +134,8 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                                 child: Padding(
                                   padding: EdgeInsets.all(2.h),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
@@ -152,56 +154,89 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                                                 AppIconManager.delete,
                                                 color: AppColorManager.grey,
                                               ),
-                                              onPressed: () => removeRoom(index),
+                                              onPressed: () =>
+                                                  removeRoom(index),
                                             ),
                                         ],
                                       ),
-                
+
                                       SizedBox(height: 1.h),
-                
+
                                       // Adults row
                                       CounterRow(
                                         label: 'adults'.tr(),
                                         value: room.adults,
-                                        onDecrement: () => changeAdults(index, -1),
-                                        onIncrement: () => changeAdults(index, 1),
+                                        onDecrement: () =>
+                                            changeAdults(index, -1),
+                                        onIncrement: () =>
+                                            changeAdults(index, 1),
                                       ),
-                
+
                                       SizedBox(height: 0.5.h),
-                
+
                                       // Children row
                                       CounterRow(
                                         label: 'children'.tr(),
                                         value: room.children,
                                         onDecrement: () =>
                                             changeChildren(index, -1),
-                                        onIncrement: () => changeChildren(index, 1),
+                                        onIncrement: () =>
+                                            changeChildren(index, 1),
                                       ),
-                
+
                                       if (room.children > 0) ...[
                                         SizedBox(height: 1.h),
                                         Column(
-                                          children: List.generate(room.children, (
-                                            childIndex,
-                                          ) {
-                                            final controller = TextEditingController(
-                                              text:
-                                                  room.childrenNames.length >
-                                                      childIndex
-                                                  ? room.childrenNames[childIndex]
-                                                  : '',
-                                            );
+                                          children: List.generate(room.children, (childIndex) {
+                                            final selectedAge = room.childrenAges.length > childIndex
+                                                ? room.childrenAges[childIndex]
+                                                : null;
+
                                             return Padding(
                                               padding: EdgeInsets.only(
                                                 bottom: 0.8.h,
                                               ),
-                                              child: MyTextFormField(
-                                                controller: controller,
+                                              child: SearchableDropdown<int>(
+                                                items: List<int>.generate(
+                                                  12,
+                                                  (i) => i + 1,
+                                                ),
+                                                selectedItem: selectedAge,
+                                                labelBuilder: (age) =>
+                                                    '$age ${'years'.tr()}',
                                                 hintText:
+                                                    '${'child_age'.tr()} ${childIndex + 1}',
+                                                titleText:
                                                     '${'child'.tr()} ${childIndex + 1}',
-                                                onChanged: (value) {
-                                                  room.childrenNames[childIndex] =
-                                                      value;
+                                                filterFn: (age, query) {
+                                                  final q = query.toLowerCase();
+                                                  final label =
+                                                      '$age ${'years'.tr()}'
+                                                          .toLowerCase();
+                                                  return age
+                                                          .toString()
+                                                          .contains(q) ||
+                                                      label.contains(q);
+                                                },
+                                                onChanged: (age) {
+                                                  setDialogState(() {
+                                                    if (room
+                                                            .childrenAges
+                                                            .length <=
+                                                        childIndex) {
+                                                      room.childrenAges.addAll(
+                                                        List<int?>.filled(
+                                                          childIndex +
+                                                              1 -
+                                                              room
+                                                                  .childrenAges
+                                                                  .length,
+                                                          null,
+                                                        ),
+                                                      );
+                                                    }
+                                                    room.childrenAges[childIndex] = age;
+                                                  });
                                                 },
                                               ),
                                             );
@@ -215,7 +250,7 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                             },
                           ),
                         ),
-                
+
                         // Add room button
                         Align(
                           alignment: Alignment.centerLeft,
@@ -261,7 +296,10 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                       borderRadius: BorderRadius.circular(10),
                       child: Text(
                         'done'.tr(),
-                        style: TextStyle(color: AppColorManager.background, fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          color: AppColorManager.background,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],

@@ -1,5 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:nilz_app/core/resource/icon_manager.dart';
 import 'package:nilz_app/core/widget/button/main_app_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
@@ -124,8 +128,17 @@ class InquiryWidget extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: MainAppButton(
+                height: 5.h,
+                color: AppColorManager.denim.withOpacity(0.7),
                 onTap: onSearch,
-                child: Text('search'.tr()),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(AppIconManager.search, color: AppColorManager.backgroundGrey,),
+                    SizedBox(width: 2.w,),
+                    Text('search'.tr(), style: TextStyle(color: AppColorManager.backgroundGrey, fontSize: 17.sp),),
+                  ],
+                ),
               ),
             ),
           ),
