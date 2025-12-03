@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:nilz_app/core/api/api_error/api_exception.dart';
 import 'package:nilz_app/core/api/api_error/api_status_code.dart';
@@ -24,7 +26,13 @@ abstract class ReservationRemote {
   });
 
   ///////////////// Unit /////////////////
-  
+
+  Future<UnitEntity> getUnitDetails({
+    required String unitId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+  });
+
   Future<UnitApiResponseEntity> getUnitChildren({
     required String cityId,
     required String toStartTimeIso,
@@ -32,6 +40,8 @@ abstract class ReservationRemote {
     required List<Map<String, dynamic>> roomConfig,
   });
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class ReservationRemoteImpl extends ReservationRemote {
   Future<Map<String, dynamic>> buildCreateReservation({
@@ -108,10 +118,35 @@ class ReservationRemoteImpl extends ReservationRemote {
     throw ApiServerException(response: res);
   }
 
-
   ///////////////// Unit /////////////////
-  
-   @override
+
+  @override
+  Future<UnitEntity> getUnitDetails({
+    required String unitId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+  }) async {
+    final response = await ApiMethods().get(
+      url: '${ApiGetUrl.getUnit}/$unitId',
+      query: <String, dynamic>{
+        'toStartTime': toStartTimeIso,
+        'toEndTime': toEndTimeIso,
+      },
+    );
+
+    debugPrint('getUnitDetails');
+    debugPrint('${response.statusCode}');
+    debugPrint(response.body);
+
+    if (ApiStatusCode.success().contains(response.statusCode)) {
+      final jsonMap = json.decode(response.body) as Map<String, dynamic>;
+      return UnitEntity.fromJson(jsonMap['data']);
+    } else {
+      throw ApiServerException(response: response);
+    }
+  }
+
+  @override
   Future<UnitApiResponseEntity> getUnitChildren({
     required String cityId,
     required String toStartTimeIso,
@@ -125,7 +160,6 @@ class ReservationRemoteImpl extends ReservationRemote {
       "roomConfig": roomConfig,
     };
 
-    // Query params: ?skip=0&limit=10000000000&withCount=true
     final response = await ApiMethods().post(
       url: ApiPostUrl.getUnitChildren,
       query: <String, dynamic>{
@@ -146,6 +180,4 @@ class ReservationRemoteImpl extends ReservationRemote {
       throw ApiServerException(response: response);
     }
   }
-
-  
 }

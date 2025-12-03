@@ -18,7 +18,6 @@ class UnitApiResponseEntity {
         _count = count;
 
   factory UnitApiResponseEntity.fromJson(dynamic json) {
-    // Case 1: pure array: [ { ...unit... }, ... ]
     if (json is List) {
       final units = json.map<UnitEntity>((e) => UnitEntity.fromJson(e)).toList();
       return UnitApiResponseEntity(
@@ -29,7 +28,6 @@ class UnitApiResponseEntity {
       );
     }
 
-    // Case 2: normal API shape: { statusCode, message, data: { results, count } }
     if (json is Map<String, dynamic>) {
       final statusCode = json['statusCode'] as int?;
       final message = json['message'] as String?;

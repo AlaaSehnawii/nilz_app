@@ -53,6 +53,26 @@ class ReservationRepositoryImpl implements ReservationRepository {
     );
   }
 
+  ///////////////////// Unit /////////////////////
+
+  @override
+  Future<Either<ApiFailure, UnitEntity>> getUnitDetails({
+    required String unitId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+  }) {
+    return Connector<UnitEntity>().connect(
+      remote: () async {
+        final result = await remote.getUnitDetails(
+          unitId: unitId,
+          toStartTimeIso: toStartTimeIso,
+          toEndTimeIso: toEndTimeIso,
+        );
+        return Right(result);
+      },
+    );
+  }
+
   @override
   Future<Either<ApiFailure, UnitApiResponseEntity>> getUnitChildren({
     required String cityId,

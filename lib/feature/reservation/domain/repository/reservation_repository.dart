@@ -3,9 +3,6 @@ import 'package:nilz_app/feature/reservation/domain/entity/response/unit_entity.
 import '../../../../../core/api/api_error/api_failures.dart';
 import '../entity/response/reservation_entity.dart';
 
-
-
-
 abstract class ReservationRepository {
   Future<Either<ApiFailure, ReservationListResponseEntity>> getReservation();
 
@@ -21,9 +18,15 @@ abstract class ReservationRepository {
     String? couponCode,
     required String userId,
     required bool withBreakfast,
-});
+  });
 
-//////////// Unit /////////////////
+  //////////// Unit /////////////////
+  Future<Either<ApiFailure, UnitEntity>> getUnitDetails({
+    required String unitId,
+    required String toStartTimeIso,
+    required String toEndTimeIso,
+  });
+
   Future<Either<ApiFailure, UnitApiResponseEntity>> getUnitChildren({
     required String cityId,
     required String toStartTimeIso,

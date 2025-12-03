@@ -8,6 +8,7 @@ import 'package:nilz_app/feature/reservation/presentation/model/room_model.dart'
 import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
 import 'package:nilz_app/feature/reservation/presentation/cubit/unit_state.dart';
 import 'package:nilz_app/core/resource/cubit_status_manager.dart';
+import 'package:nilz_app/feature/reservation/presentation/screen/unit_details_screen.dart';
 import 'package:nilz_app/feature/reservation/presentation/widget/inquiry/inquiry_widget.dart';
 import 'package:nilz_app/feature/reservation/presentation/widget/inquiry/unit_card.dart';
 
@@ -180,7 +181,34 @@ class _InquiryScreenState extends State<InquiryScreen> {
           unit: unit,
           isArabic: isArabic,
           onTap: () {
-            // TODO: navigate to unit details
+            
+    final unit = state.entity[index]; // or however you access it
+
+    final startIso = _fromDate;
+    final endIso = _toDate;
+    
+
+    context.read<UnitCubit>().getUnitDetails(
+      context,
+      unitId: unit.id!,
+      toStartTimeIso: startIso!.toIso8601String(),
+      toEndTimeIso: endIso!.toIso8601String(),
+    );
+
+    // Option A: navigate immediately to details page and let it listen to Cubit
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+      value: context.read<UnitCubit>(), 
+      child: UnitDetailsScreen(unit: unit,),
+        ),
+      ),
+    );
+
+    // Option B: OR wait for success in a listener and then navigate
+  
+
           },
         );
       },

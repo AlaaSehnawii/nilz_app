@@ -1,50 +1,71 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/resource/icon_manager.dart';
 import 'package:nilz_app/core/widget/button/main_app_button.dart';
 import 'package:nilz_app/feature/reservation/domain/entity/response/unit_entity.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class UnitCard extends StatelessWidget {
+class UnitDetailsScreen extends StatelessWidget {
   final UnitEntity unit;
-  final bool isArabic;
-  final VoidCallback? onTap;
 
-  const UnitCard({
-    super.key,
-    required this.unit,
-    required this.isArabic,
-    this.onTap,
-  });
+  const UnitDetailsScreen({Key? key, required this.unit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final unitName = isArabic
-        ? (unit.name?.ar ?? unit.name?.en ?? '')
-        : (unit.name?.en ?? unit.name?.ar ?? '');
+    final parent = unit.parent;
 
-    final cityName = isArabic
-        ? (unit.city?.name?.ar ?? unit.city?.name?.en ?? '')
-        : (unit.city?.name?.en ?? unit.city?.name?.ar ?? '');
+    String localized(LocalizedName? name) => name?.en ?? name?.ar ?? '';
 
-    final parentName = isArabic
-        ? (unit.parent?.name?.ar ?? unit.parent?.name?.en ?? '')
-        : (unit.parent?.name?.en ?? unit.parent?.name?.ar ?? '');
+    String normalizeUrl(String? url) =>
+        (url == null || url.isEmpty) ? '' : url.replaceAll('files//', 'files/');
 
-    final price = unit.price ?? '';
-    final coverUrl = unit.coverImage?.url;
+    final name = localized(unit.name);
+    final description = unit.description?.en ?? unit.description?.ar ?? '';
+    final roomTypeLabel = unit.unitType;
+    final nightCount = unit.nightCount ?? 1;
+    final isReservable = unit.reservable ?? false;
+    final isFeatured = unit.featured ?? false;
+    final city = unit.city?.name?.en;
+    final address = unit.address ?? 'Address is not available';
 
-    final int stars = (unit.stars ?? 0).toInt();
+    final String parentName = localized(parent?.name);
+    final String parentDescription =
+        parent?.description?.en ?? parent?.description?.ar ?? '';
+    final stars = unit.stars ?? 0;
+    final hotelTotalRating = unit.totalRating ?? 0;
+
+    final price = unit.price;
     final bool hasBreakfast = unit.hasBreakfast ?? false;
+    final List<BreakfastPrice> breakfastPrices = unit.breakfastPrice;
 
-    final int roomsCount = unit.roomCount ?? 1;
-    final int adultsCount = unit.adultCount ?? 2;
-    final int childrenCount = unit.childCount ?? 0;
-    final double distanceKm = (unit.cityDistance ?? 0).toDouble();
+    final adultCount = unit.adultCount ?? 0;
+    final childCount = unit.childCount ?? 0;
+    final roomCount = unit.roomCount ?? 1;
+    final bathroomCount = unit.bathroomCount ?? 1;
+    final maxExtraBed = unit.maxExtraBedCount ?? 0;
+    final approvedRes = unit.approvedReservationCount ?? 0;
+    final cancelledRes = unit.cancelledReservationCount ?? 0;
+
+    final List<UnitRoomConf> roomConfigs = unit.roomConf;
+    final UnitRoomConf? mainRoomConfig = roomConfigs.isNotEmpty
+        ? roomConfigs.first
+        : null;
+
+    final String mainRoomTypeName = localized(mainRoomConfig?.roomType?.name);
+    final int mainRoomAdult = mainRoomConfig?.adultCount ?? adultCount;
+    final int mainRoomChild = mainRoomConfig?.childCount ?? childCount;
+
+    final List<BedConf> bedConfigs = mainRoomConfig?.bedConf ?? [];
+    final BedConf? firstBed = bedConfigs.isNotEmpty ? bedConfigs.first : null;
+    final int firstBedCount = firstBed?.count ?? 0;
+    final String firstBedTypeName = localized(firstBed?.bedType?.name);
+
+    final String coverImageUrl = normalizeUrl(unit.coverImage?.url);
+    final String unitLogoUrl = normalizeUrl(unit.logo?.url);
+
+    final List<FileInfo> unitGallery = unit.gallery;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -56,11 +77,11 @@ class UnitCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              coverUrl != null && coverUrl.isNotEmpty
+              coverImageUrl != null && coverImageUrl.isNotEmpty
                   ? AspectRatio(
                       aspectRatio: 16 / 8,
                       child: Image.network(
-                        coverUrl,
+                        coverImageUrl,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
@@ -153,7 +174,7 @@ class UnitCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        unitName,
+                        name,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleMedium
@@ -189,16 +210,9 @@ class UnitCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  cityName,
+                  city ?? '',
                   style: TextStyle(fontSize: 12, color: AppColorManager.denim),
                 ),
-                if (distanceKm > 0) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    '${distanceKm.toStringAsFixed(1)} KM from city center',
-                    style: TextStyle(fontSize: 11, color: Colors.grey[500]),
-                  ),
-                ],
                 const SizedBox(height: 10),
 
                 Container(height: 1, color: Colors.grey[200]),
@@ -215,21 +229,21 @@ class UnitCard extends StatelessWidget {
                     const Icon(Icons.bed, size: 18),
                     const SizedBox(width: 4),
                     Text(
-                      '$roomsCount Room',
+                      '$roomCount Room',
                       style: const TextStyle(fontSize: 12),
                     ),
                     const SizedBox(width: 12),
                     const Icon(Icons.person, size: 18),
                     const SizedBox(width: 4),
                     Text(
-                      '$adultsCount Adult',
+                      '$adultCount Adult',
                       style: const TextStyle(fontSize: 12),
                     ),
                     const SizedBox(width: 12),
                     const Icon(Icons.child_care, size: 18),
                     const SizedBox(width: 4),
                     Text(
-                      '$childrenCount Children',
+                      '$childCount Children',
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -241,7 +255,7 @@ class UnitCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      price,
+                      price ?? '',
                       style: TextStyle(
                         color: AppColorManager.denim,
                         fontSize: 18,
@@ -249,7 +263,6 @@ class UnitCard extends StatelessWidget {
                       ),
                     ),
                     MainAppButton(
-                      onTap: onTap,
                       child: Container(
                         height: 5.h,
                         width: 15.h,
