@@ -31,7 +31,7 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // TOP BUTTONS
+        // Top Buttons
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: Row(
@@ -119,7 +119,7 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
           ),
         ),
 
-        // SEARCH BAR
+        // Search Bar
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: CustomSearchBar(
@@ -129,7 +129,7 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
         ),
         const SizedBox(height: 8),
 
-        // LIST AREA
+        // List
         Expanded(
           child: Container(
             decoration: BoxDecoration(
@@ -148,7 +148,7 @@ class _ReservationListScreenState extends State<ReservationListScreen> {
             ),
             child: const Padding(
               padding: EdgeInsets.only(top: 8),
-              child: ReservationList(), // ReservationCubit is provided in NavBar
+              child: ReservationList(),
             ),
           ),
         ),

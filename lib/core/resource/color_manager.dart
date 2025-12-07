@@ -25,6 +25,6 @@ abstract class AppColorManager {
   static const Color orange = Color(0xffff9500);
   static const Color shadow = Color.fromARGB(28, 130, 130, 130);
   static const Color denim = Color(0xFF4C4DDC);
-  // ignore: deprecated_member_use
+  static const Color amber = Color(0xFFFFBF00);
   static Color lightGreyOpacity6 = const Color(0xffe5e5ea).withOpacity(0.6);
 }

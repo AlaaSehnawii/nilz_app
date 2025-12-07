@@ -47,4 +47,9 @@ abstract class AppIconManager {
   static String data = '$_iconBasePath/data.svg';
   static const String addCircle = "$_iconBasePath/add_circle.svg";
   static const String minusCircle = "$_iconBasePath/minus_circle.svg";
+  static const String location = "$_iconBasePath/location.svg";
+  static const String bed = "$_iconBasePath/bed.svg";
+  static const String room = "$_iconBasePath/room.svg";
+  static const String children = "$_iconBasePath/children.svg";
+  static const String star = "$_iconBasePath/star.svg";
 }
