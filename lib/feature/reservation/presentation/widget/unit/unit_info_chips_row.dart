@@ -23,16 +23,18 @@ class UnitInfoChipsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      spacing: 2.w,
-      runSpacing: 1.h,
-      children: [
-        _buildInfoChip(AppIconManager.bed, '$bedCount ${'beds'.tr()}'),
-        _buildInfoChip(AppIconManager.profile, '$adultCount ${'adults'.tr()}'),
-        _buildInfoChip(AppIconManager.children, '$childCount ${'children'.tr()}'),
-        _buildInfoChip(AppIconManager.room, '$roomCount ${'room'.tr()}'),
-      ],
+    return Center(
+      child: Wrap(
+        alignment: WrapAlignment.start,
+        spacing: 2.w,
+        runSpacing: 1.h,
+        children: [
+          _buildInfoChip(AppIconManager.room, '$roomCount ${'room'.tr()}'),
+          _buildInfoChip(AppIconManager.bed, '$bedCount ${'beds'.tr()}'),
+          _buildInfoChip(AppIconManager.profile, '$adultCount ${'adults'.tr()}'),
+          _buildInfoChip(AppIconManager.children, '$childCount ${'children'.tr()}'),
+        ],
+      ),
     );
   } 
 

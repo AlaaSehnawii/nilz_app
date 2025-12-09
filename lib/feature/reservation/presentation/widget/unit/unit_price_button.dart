@@ -1,11 +1,15 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nilz_app/core/resource/color_manager.dart';
 import 'package:nilz_app/core/resource/icon_manager.dart';
 import 'package:nilz_app/core/widget/button/main_app_button.dart';
+import 'package:nilz_app/feature/drawer/basic_data/city/presentation/cubit/city_cubit.dart';
+import 'package:nilz_app/feature/reservation/presentation/cubit/unit_cubit.dart';
+import 'package:nilz_app/feature/reservation/presentation/widget/unit/unit_booking_dialog.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class UnitPriceAndButton extends StatelessWidget {
@@ -52,7 +56,34 @@ class UnitPriceAndButton extends StatelessWidget {
 
         Flexible(
           child: MainAppButton(
-            onTap: isReservable ? () {} : null,
+            onTap: isReservable
+                ? () async {
+                    // // First show dialog
+                    // final result = await showUnitBookingDialog(
+                    //   context: context,
+                    //   clients: context.read<CityCubit>().state.entity.cities,
+                    //   salesmen: context.read<CityCubit>().state.entity.cities,
+                    //   nameBuilder: (item) => item.name?.en ?? "",
+                    // );
+          
+                    // if (result == null) return; // user cancelled
+          
+                    // print("Client:  ${result.selectedClient}");
+                    // print("Salesman: ${result.selectedSalesman}");
+                    // print("Coupon:   ${result.coupon}");
+                    // print("Breakfast: ${result.breakfast}");
+          
+                    // // Now fetch unit details or create reservation
+                    // final cubit = context.read<UnitCubit>();
+          
+                    // await cubit.getUnitDetails(
+                    //   context,
+                    //   toStartTimeIso: "_toIsoDayAtNine(_fromDate!)",
+                    //   toEndTimeIso: "_toIsoDayAtNine(_toDate!)",
+                    //   unitId: '',
+                    // );
+                  }
+                : null,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.8.h),
               decoration: BoxDecoration(

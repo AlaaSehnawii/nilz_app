@@ -18,7 +18,6 @@ class UnitDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // ---- Helpers ----
     String localized(LocalizedName? name) => name?.en ?? name?.ar ?? '';
-    String localizedCity(LocalizedName? city) => city?.en ?? city?.ar ?? '';
     String normalizeUrl(String? url) =>
         (url == null || url.isEmpty) ? '' : url.replaceAll('files//', 'files/');
 
@@ -26,7 +25,7 @@ class UnitDetailsScreen extends StatelessWidget {
 
     // ---- Basic info ----
     final String name = localized(unit.name);
-    final String city = localizedCity(unit.city as LocalizedName?);
+    final String city = localized(unit.city?.name);
     final String address = unit.address ?? 'Address not available';
     final String hotelName = localized(parent?.name);
     final num stars = unit.stars ?? 0;
@@ -43,12 +42,11 @@ class UnitDetailsScreen extends StatelessWidget {
 
     // ---- Room & Bed Info ----
     final List<UnitRoomConf> roomConfigs = unit.roomConf;
-    final UnitRoomConf? mainRoomConfig = roomConfigs.isNotEmpty
-        ? roomConfigs.first
-        : null;
+    final UnitRoomConf? mainRoomConfig =
+        roomConfigs.isNotEmpty ? roomConfigs.first : null;
     final int bedCount = mainRoomConfig?.bedConf.firstOrNull?.count ?? 1;
 
-    // ---- Gallery images (cover + gallery, unique) ----
+    // ---- Gallery images ----
     final List<String> galleryImages = {
       if (unit.coverImage?.url != null) normalizeUrl(unit.coverImage!.url),
       ...unit.gallery
@@ -59,59 +57,72 @@ class UnitDetailsScreen extends StatelessWidget {
     final bool hasImages = galleryImages.isNotEmpty;
 
     return Scaffold(
-      appBar: MainAppBar(title: "", showArrowBack: true, showSuffixIcon: false),
-      body: Card(
-        margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
-        elevation: 10,
-        shadowColor: Colors.black.withOpacity(0.12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ──────── GALLERY ────────
-            UnitGallerySection(
-              galleryImages: galleryImages,
-              hasImages: hasImages,
-              hotelName: hotelName,
-              hasBreakfast: hasBreakfast,
-              stars: stars,
-            ),
+      appBar: const MainAppBar(
+        title: "",
+        showArrowBack: true,
+        showSuffixIcon: false,
+      ),
 
-            // ──────── CONTENT BELOW ────────
-            Padding(
-              padding: EdgeInsets.all(4.w),
+      body: Column(
+        children: [
+          Expanded(
+            child: Card(
+              margin:
+                  EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
+              elevation: 10,
+              shadowColor: Colors.black.withOpacity(0.12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              clipBehavior: Clip.antiAlias,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  UnitHeaderSection(
-                    unitName: name,
-                    totalRating: totalRating,
-                    city: city,
-                    address: address,
+                  UnitGallerySection(
+                    galleryImages: galleryImages,
+                    hasImages: hasImages,
+                    hotelName: hotelName,
+                    hasBreakfast: hasBreakfast,
+                    stars: stars,
                   ),
-
-                  SizedBox(height: 2.5.h),
-
-                  UnitInfoChipsRow(
-                    bedCount: bedCount,
-                    adultCount: adultCount,
-                    childCount: childCount,
-                    roomCount: roomCount,
-                  ),
-
-                  SizedBox(height: 3.h),
-
-                  UnitPriceAndButton(
-                    price: price,
-                    nightCount: nightCount,
-                    isReservable: isReservable,
+            
+                  Padding(
+                    padding: EdgeInsets.all(4.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        UnitHeaderSection(
+                          unitName: name,
+                          totalRating: totalRating,
+                          city: city,
+                          address: address,
+                        ),
+                        SizedBox(height: 4.h),
+            
+                        UnitInfoChipsRow(
+                          bedCount: bedCount,
+                          adultCount: adultCount,
+                          childCount: childCount,
+                          roomCount: roomCount,
+                        ),
+            
+                        SizedBox(height: 3.h),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(4.w, 1.h, 4.w, 2.h),
+            child: UnitPriceAndButton(
+              price: price,
+              nightCount: nightCount,
+              isReservable: isReservable,
+            ),
+          ),
+        ],
       ),
     );
   }

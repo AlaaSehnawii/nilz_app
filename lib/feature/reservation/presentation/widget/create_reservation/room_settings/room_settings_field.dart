@@ -187,8 +187,12 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                                       if (room.children > 0) ...[
                                         SizedBox(height: 1.h),
                                         Column(
-                                          children: List.generate(room.children, (childIndex) {
-                                            final selectedAge = room.childrenAges.length > childIndex
+                                          children: List.generate(room.children, (
+                                            childIndex,
+                                          ) {
+                                            final selectedAge =
+                                                room.childrenAges.length >
+                                                    childIndex
                                                 ? room.childrenAges[childIndex]
                                                 : null;
 
@@ -235,7 +239,8 @@ class _RoomSettingsFieldState extends State<RoomSettingsField> {
                                                         ),
                                                       );
                                                     }
-                                                    room.childrenAges[childIndex] = age;
+                                                    room.childrenAges[childIndex] =
+                                                        age;
                                                   });
                                                 },
                                               ),
