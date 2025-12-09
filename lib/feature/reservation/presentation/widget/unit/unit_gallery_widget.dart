@@ -32,9 +32,7 @@ class UnitGallerySection extends StatelessWidget {
       width: double.infinity,
       child: Stack(
         children: [
-          // ──────── SLIDER BACKGROUND ────────
           ClipRRect(
-            // Card above already clips, but this guarantees no overflow
             borderRadius: BorderRadius.circular(0),
             child: hasImages
                 ? CarouselSlider.builder(
@@ -64,7 +62,7 @@ class UnitGallerySection extends StatelessWidget {
                     options: CarouselOptions(
                       height: double.infinity,
                       viewportFraction: 1.0,
-                      enlargeCenterPage: false, // important
+                      enlargeCenterPage: false,
                       autoPlay: galleryImages.length > 1,
                       autoPlayInterval: const Duration(seconds: 5),
                       enableInfiniteScroll: galleryImages.length > 1,
@@ -78,7 +76,6 @@ class UnitGallerySection extends StatelessWidget {
                   ),
           ),
 
-          // ──────── GRADIENT OVERLAY ────────
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -96,7 +93,6 @@ class UnitGallerySection extends StatelessWidget {
             ),
           ),
 
-          // ──────── STAR BADGE ────────
           Positioned(
             top: 16,
             right: 16,
@@ -130,7 +126,6 @@ class UnitGallerySection extends StatelessWidget {
             ),
           ),
 
-          // ──────── BREAKFAST BADGE ────────
           if (hasBreakfast)
             Positioned(
               bottom: 50,
@@ -168,7 +163,6 @@ class UnitGallerySection extends StatelessWidget {
               ),
             ),
 
-          // ──────── HOTEL NAME ────────
           Positioned(
             bottom: 16,
             left: 16,

@@ -12,7 +12,7 @@ import '../core/navigation/slid_up_builder_route.dart';
 import '../feature/intro/presentation/splash_screen.dart';
 
 abstract class AppRouterScreenNames {
-   static String init = login;
+   static String init = splash;
 
   // AppSharedPreferences.getToken().isEmpty ? login : mainBottomAppBar;
 

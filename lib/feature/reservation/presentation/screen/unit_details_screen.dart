@@ -115,7 +115,7 @@ class UnitDetailsScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(4.w, 1.h, 4.w, 2.h),
+            padding: EdgeInsets.fromLTRB(7.w, 1.h, 4.w, 2.h),
             child: UnitPriceAndButton(
               price: price,
               nightCount: nightCount,

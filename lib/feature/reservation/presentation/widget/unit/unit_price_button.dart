@@ -58,30 +58,28 @@ class UnitPriceAndButton extends StatelessWidget {
           child: MainAppButton(
             onTap: isReservable
                 ? () async {
-                    // // First show dialog
-                    // final result = await showUnitBookingDialog(
-                    //   context: context,
-                    //   clients: context.read<CityCubit>().state.entity.cities,
-                    //   salesmen: context.read<CityCubit>().state.entity.cities,
-                    //   nameBuilder: (item) => item.name?.en ?? "",
-                    // );
+                    final result = await showUnitBookingDialog(
+                      context: context,
+                      clients: context.read<CityCubit>().state.entity.cities,
+                      salesmen: context.read<CityCubit>().state.entity.cities,
+                      nameBuilder: (item) => item.name?.en ?? "",
+                    );
           
-                    // if (result == null) return; // user cancelled
+                    if (result == null) return;
           
-                    // print("Client:  ${result.selectedClient}");
-                    // print("Salesman: ${result.selectedSalesman}");
-                    // print("Coupon:   ${result.coupon}");
-                    // print("Breakfast: ${result.breakfast}");
+                    print("Client:  ${result.selectedClient}");
+                    print("Salesman: ${result.selectedSalesman}");
+                    print("Coupon:   ${result.coupon}");
+                    print("Breakfast: ${result.breakfast}");
           
-                    // // Now fetch unit details or create reservation
-                    // final cubit = context.read<UnitCubit>();
+                    final cubit = context.read<UnitCubit>();
           
-                    // await cubit.getUnitDetails(
-                    //   context,
-                    //   toStartTimeIso: "_toIsoDayAtNine(_fromDate!)",
-                    //   toEndTimeIso: "_toIsoDayAtNine(_toDate!)",
-                    //   unitId: '',
-                    // );
+                    await cubit.getUnitDetails(
+                      context,
+                      toStartTimeIso: "_toIsoDayAtNine(_fromDate!)",
+                      toEndTimeIso: "_toIsoDayAtNine(_toDate!)",
+                      unitId: '',
+                    );
                   }
                 : null,
             child: Container(

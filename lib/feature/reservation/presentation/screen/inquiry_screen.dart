@@ -271,8 +271,6 @@ class _InquiryScreenState extends State<InquiryScreen> {
               toStartTimeIso: startIso!.toIso8601String(),
               toEndTimeIso: endIso!.toIso8601String(),
             );
-
-            // Option A: navigate immediately to details page and let it listen to Cubit
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -282,8 +280,6 @@ class _InquiryScreenState extends State<InquiryScreen> {
                 ),
               ),
             );
-
-            // Option B: OR wait for success in a listener and then navigate
           },
         );
       },
